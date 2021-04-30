@@ -101,6 +101,9 @@
         _HalftoneLineIntensity("Halftone Line Intensity", Range(0,1)) = 1
 
         [Enum(UV, 0, Root Distance (Spherical), 1, Height, 2)]_DissolveCoordinates("Dissolve Shape", Int) = 0
+        [ToggleUI]_UseSimplexNoise("Use Simplex Noise", Int) = 0
+        _SimplexScale("Simplex Scale", Vector) = (10, 10, 10)
+        _SimplexSpeed("Simplex Speed", Vector) = (1, -2, 2)
         _DissolveTexture("Dissolve Texture", 2D) = "black" {}
         _DissolveStrength("Dissolve Sharpness", Float) = 1
         [HDR]_DissolveColor("Dissolve Color", Color) = (1,1,1,1)
@@ -199,6 +202,7 @@
             #endif
 
             #include "../CGIncludes/XSDefines.cginc"
+            #include "../CGIncludes/XSNoiseFuntions.cginc"
             #include "../CGIncludes/XSHelperFunctions.cginc"
             #include "../CGIncludes/XSLightingFunctions.cginc"
             #include "../CGIncludes/XSLighting.cginc"
@@ -230,6 +234,7 @@
             #endif
 
             #include "../CGIncludes/XSDefines.cginc"
+            #include "../CGIncludes/XSNoiseFuntions.cginc"
             #include "../CGIncludes/XSHelperFunctions.cginc"
             #include "../CGIncludes/XSLightingFunctions.cginc"
             #include "../CGIncludes/XSLighting.cginc"
@@ -259,6 +264,7 @@
             #pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
 
             #include "../CGIncludes/XSDefines.cginc"
+            #include "../CGIncludes/XSNoiseFuntions.cginc"
             #include "../CGIncludes/XSHelperFunctions.cginc"
             #include "../CGIncludes/XSLightingFunctions.cginc"
             #include "../CGIncludes/XSLighting.cginc"

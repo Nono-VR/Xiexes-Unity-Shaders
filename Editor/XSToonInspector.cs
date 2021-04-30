@@ -121,6 +121,9 @@ namespace XSToon
         private MaterialProperty _RefractionModel = null;
         private MaterialProperty _NormalMapMode = null;
         private MaterialProperty _DissolveCoordinates = null;
+        private MaterialProperty _UseSimplexNoise = null;
+        private MaterialProperty _SimplexScale = null;
+        private MaterialProperty _SimplexSpeed = null;
         private MaterialProperty _DissolveTexture = null;
         private MaterialProperty _DissolveStrength = null;
         private MaterialProperty _DissolveColor = null;
@@ -177,6 +180,7 @@ namespace XSToon
         private static bool showEyeTracking = false;
         private static bool showRefractionSettings = false;
         private static bool showDissolveSettings = false;
+        private static bool showDissolveSimplexSettings = false;
 
         private static int BlendMode;
 
@@ -186,6 +190,7 @@ namespace XSToon
         private bool isCutout = false;
         private bool isCutoutMasked = false;
         private bool isDithered = false;
+        private bool isAlphaToCoverage = false;
         private bool isRefractive = false;
 
 
@@ -196,6 +201,7 @@ namespace XSToon
 
             isCutout = material.GetInt("_BlendMode") == 1;
             isDithered = material.GetInt("_BlendMode") == 2;
+            isAlphaToCoverage = material.GetInt("_BlendMode") == 3;
             isRefractive = material.GetInt("_UseRefraction") == 1;
             isOutlined = shader.name.Contains("Outline");
             isPatreonShader = shader.name.Contains("Patreon");
@@ -350,15 +356,26 @@ namespace XSToon
 
         private void DrawDissolveSettings(MaterialEditor materialEditor)
         {
-            if (isCutout || isDithered)
+            if (isCutout || isDithered)// || isAlphaToCoverage)
             {
                 showDissolveSettings = XSStyles.ShurikenFoldout("Dissolve", showDissolveSettings);
                 if (showDissolveSettings)
                 {
                     materialEditor.ShaderProperty(_DissolveCoordinates, new GUIContent("Dissolve Coordinates", "Should Dissolve happen in world space, texture space, or vertically?"));
-                    materialEditor.TexturePropertySingleLine(new GUIContent("Dissolve Texture", "Noise texture used to control up dissolve pattern"), _DissolveTexture, _DissolveColor);
-                    materialEditor.TextureScaleOffsetProperty(_DissolveTexture);
-                    materialEditor.ShaderProperty(_UVSetDissolve, new GUIContent("UV Set", "The UV set to use for the Dissolve Texture."), 2);
+
+                    materialEditor.ShaderProperty(_UseSimplexNoise, new GUIContent("Use Simplex Noise", "Replace Dissolve noise texture with vertex space 3d noise?"));
+                    if (_UseSimplexNoise.floatValue == 1)
+                    {
+                        materialEditor.TexturePropertySingleLine(new GUIContent("Dissolve Texture", "Dissolve Texture is not used in simplex noise mode, color still is."), _DissolveTexture, _DissolveColor);
+                        materialEditor.ShaderProperty(_SimplexScale, new GUIContent("Noise Scale", "The X, Y, Z scale of the simplex noise."));
+                        materialEditor.ShaderProperty(_SimplexSpeed, new GUIContent("Noise Move Vector", "The X, Y, Z paning speed of the simplex noise."));
+                    }
+                    else
+                    {
+                        materialEditor.TexturePropertySingleLine(new GUIContent("Dissolve Texture", "Noise texture used to control up dissolve pattern"), _DissolveTexture, _DissolveColor);
+                        materialEditor.TextureScaleOffsetProperty(_DissolveTexture);
+                        materialEditor.ShaderProperty(_UVSetDissolve, new GUIContent("UV Set", "The UV set to use for the Dissolve Texture."), 2);
+                    }
 
                     materialEditor.ShaderProperty(_DissolveStrength, new GUIContent("Dissolve Sharpness", "Sharpness of the dissolve texture."));
                     materialEditor.ShaderProperty(_DissolveProgress, new GUIContent("Dissolve Progress", "Progress of the dissolve effect."));
