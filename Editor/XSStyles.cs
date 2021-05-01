@@ -39,6 +39,16 @@ namespace XSToon
             });
         }
 
+        public static void DoHeaderLeft(string text)
+        {
+            GUILayout.Label(text, new GUIStyle(EditorStyles.boldLabel)
+            {
+                alignment = TextAnchor.MiddleLeft,
+                wordWrap = true,
+                fontSize = 12
+            });
+        }
+
         public static void doLabel(string text)
         {
             GUILayout.Label(text, new GUIStyle(EditorStyles.label)
@@ -179,18 +189,18 @@ namespace XSToon
         //GUI Lines
         static public void Separator()
         {
-            GUILayout.Space(4);
-            GUILine(new Color(.3f, .3f, .3f), 1);
-            GUILine(new Color(.9f, .9f, .9f), 1);
-            GUILayout.Space(4);
+            GUILayout.Space(10);
+            GUILine(new Color(.1f, .1f, .1f), 1f);
+            GUILine(new Color(.3f, .3f, .3f), 2f);
+            GUILayout.Space(10);
         }
 
         static public void SeparatorThin()
         {
-            GUILayout.Space(2);
+            GUILayout.Space(6);
             GUILine(new Color(.1f, .1f, .1f), 1f);
             GUILine(new Color(.3f, .3f, .3f), 1f);
-            GUILayout.Space(2);
+            GUILayout.Space(6);
         }
 
         static public void SeparatorBig()

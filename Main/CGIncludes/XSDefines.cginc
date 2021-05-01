@@ -104,6 +104,7 @@ struct XSLighting
     half4 hsvMask;
     half4 clipMap;
     half4 dissolveMask;
+    half4 dissolveMaskSecondLayer;
     half3 diffuseColor;
     half attenuation;
     half3 normal;
@@ -156,7 +157,7 @@ struct VertexLightInformation {
     float Attenuation[4];
 };
 
-UNITY_DECLARE_TEX2DARRAY(_ClipMaskArray);
+
 UNITY_DECLARE_TEX2D(_MainTex); half4 _MainTex_ST;
 UNITY_DECLARE_TEX2D_NOSAMPLER(_ClipMap); half4 _ClipMap_ST;
 UNITY_DECLARE_TEX2D_NOSAMPLER(_DissolveTexture); half4 _DissolveTexture_ST;
@@ -172,6 +173,7 @@ UNITY_DECLARE_TEX2D_NOSAMPLER(_RampSelectionMask);
 UNITY_DECLARE_TEX2D_NOSAMPLER(_HSVMask);
 sampler2D _OcclusionMap; half4 _OcclusionMap_ST;
 sampler2D _OutlineMask;
+sampler2D _ClipMask;
 sampler2D _Matcap;
 sampler2D _Ramp;
 samplerCUBE _BakedCubemap;
@@ -210,6 +212,8 @@ half _RimRange, _RimThreshold, _RimIntensity, _RimSharpness, _RimAlbedoTint, _Ri
 half _ShadowRimRange, _ShadowRimThreshold, _ShadowRimSharpness, _ShadowSharpness, _ShadowRimAlbedoTint;
 half _SSDistortion, _SSPower, _SSScale;
 half _OutlineWidth;
+half _DissolveBlendPower, _DissolveLayer1Scale, _DissolveLayer2Scale, _DissolveLayer1Speed, _DissolveLayer2Speed;
+
 half4 _ClipSlider00,_ClipSlider01,_ClipSlider02,_ClipSlider03,
      _ClipSlider04,_ClipSlider05,_ClipSlider06,_ClipSlider07,
      _ClipSlider08,_ClipSlider09,_ClipSlider10,_ClipSlider11,
@@ -229,6 +233,7 @@ int _UVSetAlbedo, _UVSetNormal, _UVSetDetNormal,
     _UVSetThickness, _UVSetOcclusion, _UVSetReflectivity,
     _UVSetEmission, _UVSetClipMap, _UVSetDissolve;
 int _NormalMapMode, _OutlineUVSelect;
+int _AlphaToMask;
 
 //!RDPSDefines
 

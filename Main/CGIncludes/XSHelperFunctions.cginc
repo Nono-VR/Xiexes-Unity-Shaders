@@ -250,7 +250,7 @@ half3 getEnvMap(XSLighting i, DotProducts d, float blur, half3 reflDir, half3 in
     return envMap;
 }
 
-float AlphaAdjust(float alphaToAdj, float4 vColor)
+float AlphaAdjust(float alphaToAdj, float3 vColor)
 {
     _ClipAgainstVertexColorGreaterZeroFive = saturate(_ClipAgainstVertexColorGreaterZeroFive); //So the lerp doesn't go crazy
     _ClipAgainstVertexColorLessZeroFive = saturate(_ClipAgainstVertexColorLessZeroFive);
@@ -258,44 +258,48 @@ float AlphaAdjust(float alphaToAdj, float4 vColor)
     float modR = vColor.r < 0.5 ? _ClipAgainstVertexColorLessZeroFive.r : _ClipAgainstVertexColorGreaterZeroFive.r;
     float modG = vColor.g < 0.5 ? _ClipAgainstVertexColorLessZeroFive.g : _ClipAgainstVertexColorGreaterZeroFive.g;
     float modB = vColor.b < 0.5 ? _ClipAgainstVertexColorLessZeroFive.b : _ClipAgainstVertexColorGreaterZeroFive.b;
-    float modA = vColor.a < 0.5 ? _ClipAgainstVertexColorLessZeroFive.a : _ClipAgainstVertexColorGreaterZeroFive.a;
 
     alphaToAdj *= lerp(0, 1, lerp(1, modR, step(0.01, vColor.r)));
     alphaToAdj *= lerp(0, 1, lerp(1, modG, step(0.01, vColor.g)));
     alphaToAdj *= lerp(0, 1, lerp(1, modB, step(0.01, vColor.b)));
-    alphaToAdj *= lerp(0, 1, lerp(1, modA, step(0.01, vColor.a)));
 
     return alphaToAdj;
 }
 
+bool IsColorMatch(float3 color1, float3 color2)
+{
+    float epsilon = 0.1;
+    float3 delta = abs(color1.rgb - color2.rgb);
+    return step((delta.r + delta.g + delta.b), epsilon);
+}
+
 float AdjustAlphaUsingTextureArray(XSLighting i, float alphaToAdj)
 {
-    half4 compVal = 0;
-    switch (_ClipIndex)
+    half4 compValRGBW = 0; // Red Green Blue White
+    half4 compValCYMB = 0; // Cyan Yellow Magenta Black
+    switch (_ClipIndex) // Each of these is a Vector / 4 masks, 2 per material, so 8 masks per material, 8 materials max, 64 total masks
     {
-        case 0 : compVal = _ClipSlider00; break;
-        case 1 : compVal = _ClipSlider01; break;
-        case 2 : compVal = _ClipSlider02; break;
-        case 3 : compVal = _ClipSlider03; break;
-        case 4 : compVal = _ClipSlider04; break;
-        case 5 : compVal = _ClipSlider05; break;
-        case 6 : compVal = _ClipSlider06; break;
-        case 7 : compVal = _ClipSlider07; break;
-        case 8 : compVal = _ClipSlider08; break;
-        case 9 : compVal = _ClipSlider09; break;
-        case 10: compVal = _ClipSlider10; break;
-        case 11: compVal = _ClipSlider11; break;
-        case 12: compVal = _ClipSlider12; break;
-        case 13: compVal = _ClipSlider13; break;
-        case 14: compVal = _ClipSlider14; break;
-        case 15: compVal = _ClipSlider15; break;
+        case 0 : compValRGBW = _ClipSlider00; compValCYMB = _ClipSlider01; break;
+        case 1 : compValRGBW = _ClipSlider02; compValCYMB = _ClipSlider03; break;
+        case 2 : compValRGBW = _ClipSlider04; compValCYMB = _ClipSlider05; break;
+        case 3 : compValRGBW = _ClipSlider06; compValCYMB = _ClipSlider07; break;
+        case 4 : compValRGBW = _ClipSlider08; compValCYMB = _ClipSlider09; break;
+        case 5 : compValRGBW = _ClipSlider10; compValCYMB = _ClipSlider11; break;
+        case 6 : compValRGBW = _ClipSlider12; compValCYMB = _ClipSlider13; break;
+        case 7 : compValRGBW = _ClipSlider14; compValCYMB = _ClipSlider15; break;
     }
 
-    //I fuckin hate this lol
-    alphaToAdj *= lerp(0, 1, lerp(1, compVal.r, step(0.01, i.clipMap.r)));
-    alphaToAdj *= lerp(0, 1, lerp(1, compVal.g, step(0.01, i.clipMap.g)));
-    alphaToAdj *= lerp(0, 1, lerp(1, compVal.b, step(0.01, i.clipMap.b)));
-    alphaToAdj *= lerp(0, 1, lerp(1, compVal.a, step(0.01, i.clipMap.a)));
+    //Compares to Red, Green, Blue, and White against the first slider set
+    alphaToAdj *= lerp(1, 1-compValRGBW.r, IsColorMatch(i.clipMap.rgb, float3(1,0,0)));
+    alphaToAdj *= lerp(1, 1-compValRGBW.g, IsColorMatch(i.clipMap.rgb, float3(0,1,0)));
+    alphaToAdj *= lerp(1, 1-compValRGBW.b, IsColorMatch(i.clipMap.rgb, float3(0,0,1)));
+    alphaToAdj *= lerp(1, 1-compValRGBW.w, IsColorMatch(i.clipMap.rgb, float3(1,1,1)));
+
+    //Compares to Cyan, Yellow, Magenta, and Black against the second slider set
+    alphaToAdj *= lerp(1, 1-compValCYMB.r, IsColorMatch(i.clipMap.rgb, float3(0,1,1)));
+    alphaToAdj *= lerp(1, 1-compValCYMB.g, IsColorMatch(i.clipMap.rgb, float3(1,1,0)));
+    alphaToAdj *= lerp(1, 1-compValCYMB.b, IsColorMatch(i.clipMap.rgb, float3(1,0,1)));
+    alphaToAdj *= lerp(1, 1-compValCYMB.w, IsColorMatch(i.clipMap.rgb, float3(0,0,0)));
 
     return alphaToAdj;
 }
@@ -303,19 +307,8 @@ float AdjustAlphaUsingTextureArray(XSLighting i, float alphaToAdj)
 void calcDissolve(inout XSLighting i, inout float4 col)
 {
     #ifdef _ALPHATEST_ON
-        half dissolveAmt;
-        if (_UseSimplexNoise)
-        {
-            float3 vertex3Pos = mul(unity_WorldToObject, i.worldPos);
-            float time = (1.0 - (_Time.x * 5.0));
-            float3 append = (float3((vertex3Pos.x + (_Time.x * _SimplexSpeed.x)) * _SimplexScale.x, (vertex3Pos.y + (_Time.x * _SimplexSpeed.y)) * _SimplexScale.y, (vertex3Pos.z + (_Time.x * _SimplexSpeed.z)) * _SimplexScale.z));
-            i.dissolveMask.x = simplex3d(append.xyz);
-            dissolveAmt = Remap_Float(i.dissolveMask.x, float2(-1, 1), float2(0.1, 0.9));
-        }
-        else
-        {
-            dissolveAmt = Remap_Float(i.dissolveMask.x, float2(0, 1), float2(0.1, 0.9));
-        }
+        float4 mask = i.dissolveMask.x * i.dissolveMaskSecondLayer.x * _DissolveBlendPower;
+        half dissolveAmt = Remap_Float(mask, float2(0,1), float2(0.25, 0.75));
         half dissolveProgress = saturate(_DissolveProgress + lerp(0, 1-AdjustAlphaUsingTextureArray(i, 1), _UseClipsForDissolve));
         half dissolve = 0;
         if (_DissolveCoordinates == 0)
@@ -367,7 +360,7 @@ void calcAlpha(inout XSLighting i)
 
     #ifdef _ALPHATEST_ON
         float modifiedAlpha = lerp(AdjustAlphaUsingTextureArray(i, i.albedo.a), i.albedo.a, _UseClipsForDissolve);
-        if(_BlendMode >= 3)
+        if(_BlendMode == 3 || _AlphaToMask == 1)
         {
             half dither = calcDither(i.screenUV.xy);
             i.alpha = modifiedAlpha - (dither * (1-i.albedo.a) * 0.15);

@@ -20,7 +20,7 @@ namespace XSToon
 
         private Vector2 ClipScrollPos;
         private int ClipMapCount = 1;
-        public Texture2D[] ClipMaps = new Texture2D[16];
+        public Texture2D[] ClipMaps = new Texture2D[8];
         public static Renderer Rend;
 
 
@@ -39,6 +39,7 @@ namespace XSToon
         public TextureWrapMode wrapModeV = TextureWrapMode.Repeat;
 
         public int anisoLevel = 1;
+        public bool AutoAssignToMaterials = false;
 
         public struct TextureSettings
         {
@@ -72,17 +73,7 @@ namespace XSToon
             if (GUILayout.Button("Create Array"))
             {
                 CreateTextureArray();
-                if (Rend != null)
-                {
-                    for (int i = 0; i < Rend.sharedMaterials.Length; i++)
-                    {
-                        if (Rend.sharedMaterials[i].HasProperty("_ClipMaskArray"))
-                        {
-                            Debug.Log(
-                                $"Material {Rend.sharedMaterials[i].name} is supported, auto assigning TexArray.");
-                        }
-                    }
-                }
+
             }
             GUILayout.Space(8);
         }
@@ -216,7 +207,12 @@ namespace XSToon
 
                 output.Apply(false);
 
-                string path = EditorUtility.SaveFilePanelInProject("Save Array", $"{Rend.name}_texarray.asset", "asset", "Please enter a file name to save the texture array to");
+                string path = "";
+                if(Rend != null)
+                    path = EditorUtility.SaveFilePanelInProject("Save Array", $"{Rend.name}_texarray.asset", "asset", "Please enter a file name to save the texture array to");
+                else
+                    path = EditorUtility.SaveFilePanelInProject("Save Array", "SwapMask_texarray.asset", "asset", "Please enter a file name to save the texture array to");
+
                 if (path.Length != 0)
                 {
                     AssetDatabase.CreateAsset(output, path);

@@ -105,6 +105,12 @@
         _SimplexScale("Simplex Scale", Vector) = (10, 10, 10)
         _SimplexSpeed("Simplex Speed", Vector) = (1, -2, 2)
         _DissolveTexture("Dissolve Texture", 2D) = "black" {}
+        _DissolveBlendPower("Layer Blend Power", Float) = 1
+        _DissolveLayer1Scale("Layer1 Scale", Float) = 1
+        _DissolveLayer2Scale("Layer2 Scale", Float) = 0.5
+        _DissolveLayer1Speed("Layer1 Speed", Float) = 0
+        _DissolveLayer2Speed("Layer2 Speed", Float) = 0
+
         _DissolveStrength("Dissolve Sharpness", Float) = 1
         [HDR]_DissolveColor("Dissolve Color", Color) = (1,1,1,1)
         _DissolveProgress("Dissolve Amount", Range(0,1)) = 0
@@ -139,25 +145,24 @@
         [HideInInspector] _ZWrite ("__zw", int) = 1
         [HideInInspector] _AlphaToMask("__am", int) = 0
 
-        //A bit of a hack, but, a pretty okay hack?
-        _ClipMaskArray("Clip Mask Array", 2DArray) = "black" {}
-        [IntRange]_ClipIndex("Clip Index", Range(0,15)) = 0
-        _ClipSlider00("", Vector) = (1,1,1,1)
-        _ClipSlider01("", Vector) = (1,1,1,1)
-        _ClipSlider02("", Vector) = (1,1,1,1)
-        _ClipSlider03("", Vector) = (1,1,1,1)
-        _ClipSlider04("", Vector) = (1,1,1,1)
-        _ClipSlider05("", Vector) = (1,1,1,1)
-        _ClipSlider06("", Vector) = (1,1,1,1)
-        _ClipSlider07("", Vector) = (1,1,1,1)
-        _ClipSlider08("", Vector) = (1,1,1,1)
-        _ClipSlider09("", Vector) = (1,1,1,1)
-        _ClipSlider10("", Vector) = (1,1,1,1)
-        _ClipSlider11("", Vector) = (1,1,1,1)
-        _ClipSlider12("", Vector) = (1,1,1,1)
-        _ClipSlider13("", Vector) = (1,1,1,1)
-        _ClipSlider14("", Vector) = (1,1,1,1)
-        _ClipSlider15("", Vector) = (1,1,1,1)
+        _ClipMask("Clip Mask", 2D) = "black" {}
+        [IntRange]_ClipIndex("Clip Index", Range(0,7)) = 0
+        _ClipSlider00("", Vector) = (0,0,0,0)
+        _ClipSlider01("", Vector) = (0,0,0,0)
+        _ClipSlider02("", Vector) = (0,0,0,0)
+        _ClipSlider03("", Vector) = (0,0,0,0)
+        _ClipSlider04("", Vector) = (0,0,0,0)
+        _ClipSlider05("", Vector) = (0,0,0,0)
+        _ClipSlider06("", Vector) = (0,0,0,0)
+        _ClipSlider07("", Vector) = (0,0,0,0)
+        _ClipSlider08("", Vector) = (0,0,0,0)
+        _ClipSlider09("", Vector) = (0,0,0,0)
+        _ClipSlider10("", Vector) = (0,0,0,0)
+        _ClipSlider11("", Vector) = (0,0,0,0)
+        _ClipSlider12("", Vector) = (0,0,0,0)
+        _ClipSlider13("", Vector) = (0,0,0,0)
+        _ClipSlider14("", Vector) = (0,0,0,0)
+        _ClipSlider15("", Vector) = (0,0,0,0)
 
         //!RDPSProps
     }
@@ -186,7 +191,7 @@
             ZWrite [_ZWrite]
             CGPROGRAM
             //#!RDPSTypeDefine
-            #pragma target 3.0
+            #pragma target 5.0
             #pragma vertex vert
             #pragma fragment frag
             #pragma shader_feature _ALPHABLEND_ON
@@ -221,7 +226,7 @@
             Fog { Color (0,0,0,0) }
             CGPROGRAM
             //#!RDPSTypeDefine
-            #pragma target 3.0
+            #pragma target 5.0
             #pragma vertex vert
             #pragma fragment frag
             #pragma shader_feature _ALPHABLEND_ON
@@ -250,7 +255,7 @@
             ZWrite On ZTest LEqual
             CGPROGRAM
             //#!RDPSTypeDefine
-            #pragma target 3.0
+            #pragma target 5.0
             #pragma vertex vert
             #pragma fragment frag
             #pragma shader_feature _ALPHABLEND_ON
