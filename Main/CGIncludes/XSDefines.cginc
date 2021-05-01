@@ -191,7 +191,7 @@ half _DissolveProgress, _DissolveStrength;
 int _DissolveCoordinates;
 int _UseClipsForDissolve;
 int _UseSimplexNoise;
-half3 _SimplexScale, _SimplexSpeed;
+half3 _SimplexScale;
 
 half4 _ShadowRim,
       _OutlineColor, _SSColor,

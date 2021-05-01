@@ -141,6 +141,8 @@ namespace XSToon
         private MaterialProperty _NormalMapMode = null;
         private MaterialProperty _DissolveCoordinates = null;
         private MaterialProperty _DissolveTexture = null;
+        private MaterialProperty _UseSimplexNoise = null;
+        private MaterialProperty _SimplexScale = null;
         private MaterialProperty _DissolveStrength = null;
         private MaterialProperty _DissolveColor = null;
         private MaterialProperty _DissolveProgress = null;
@@ -375,11 +377,15 @@ namespace XSToon
                 Foldouts[material].ShowDissolve = XSStyles.ShurikenFoldout("Dissolve", Foldouts[material].ShowDissolve);
                 if (Foldouts[material].ShowDissolve)
                 {
+                    materialEditor.ShaderProperty(_UseSimplexNoise, new GUIContent("Use Simplex Noise", "Replace Dissolve noise texture with vertex space 3d noise?"));
+                    if (_UseSimplexNoise.floatValue == 1)
+                    {
+                        materialEditor.ShaderProperty(_SimplexScale, new GUIContent("Noise Scale", "The X, Y, Z scale of the simplex noise."));
+                    }
                     materialEditor.ShaderProperty(_DissolveCoordinates, new GUIContent("Dissolve Coordinates", "Should Dissolve happen in world space, texture space, or vertically?"));
                     materialEditor.TexturePropertySingleLine(new GUIContent("Dissolve Texture", "Noise texture used to control up dissolve pattern"), _DissolveTexture, _DissolveColor);
                     materialEditor.TextureScaleOffsetProperty(_DissolveTexture);
                     materialEditor.ShaderProperty(_UVSetDissolve, new GUIContent("UV Set", "The UV set to use for the Dissolve Texture."), 2);
-
 
                     materialEditor.ShaderProperty(_DissolveBlendPower, new GUIContent("Layer Blend", "How much to boost the blended layers"));
                     materialEditor.ShaderProperty(_DissolveLayer1Scale, new GUIContent("Layer 1 Scale", "How much tiling to apply to the layer."));

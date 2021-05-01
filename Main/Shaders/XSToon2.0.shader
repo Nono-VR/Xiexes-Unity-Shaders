@@ -103,7 +103,6 @@
         [Enum(UV, 0, Root Distance (Spherical), 1, Height, 2)]_DissolveCoordinates("Dissolve Shape", Int) = 0
         [ToggleUI]_UseSimplexNoise("Use Simplex Noise", Int) = 0
         _SimplexScale("Simplex Scale", Vector) = (10, 10, 10)
-        _SimplexSpeed("Simplex Speed", Vector) = (1, -2, 2)
         _DissolveTexture("Dissolve Texture", 2D) = "black" {}
         _DissolveBlendPower("Layer Blend Power", Float) = 1
         _DissolveLayer1Scale("Layer1 Scale", Float) = 1
