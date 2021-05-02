@@ -266,40 +266,53 @@ float AlphaAdjust(float alphaToAdj, float3 vColor)
     return alphaToAdj;
 }
 
-bool IsColorMatch(float3 color1, float3 color2)
+bool IsColorMatch(float4 color1, float4 color2)
 {
     float epsilon = 0.1;
-    float3 delta = abs(color1.rgb - color2.rgb);
-    return step((delta.r + delta.g + delta.b), epsilon);
+    float4 delta = abs(color1.rgba - color2.rgba);
+    return step((delta.r + delta.g + delta.b + delta.a), epsilon);
 }
 
 float AdjustAlphaUsingTextureArray(XSLighting i, float alphaToAdj)
 {
     half4 compValRGBW = 0; // Red Green Blue White
     half4 compValCYMB = 0; // Cyan Yellow Magenta Black
+    half4 compValRGBWA = 0; // Red Green Blue White
+    half4 compValCYMBA = 0; // Cyan Yellow Magenta Black
     switch (_ClipIndex) // Each of these is a Vector / 4 masks, 2 per material, so 8 masks per material, 8 materials max, 64 total masks
     {
-        case 0 : compValRGBW = _ClipSlider00; compValCYMB = _ClipSlider01; break;
-        case 1 : compValRGBW = _ClipSlider02; compValCYMB = _ClipSlider03; break;
-        case 2 : compValRGBW = _ClipSlider04; compValCYMB = _ClipSlider05; break;
-        case 3 : compValRGBW = _ClipSlider06; compValCYMB = _ClipSlider07; break;
-        case 4 : compValRGBW = _ClipSlider08; compValCYMB = _ClipSlider09; break;
-        case 5 : compValRGBW = _ClipSlider10; compValCYMB = _ClipSlider11; break;
-        case 6 : compValRGBW = _ClipSlider12; compValCYMB = _ClipSlider13; break;
-        case 7 : compValRGBW = _ClipSlider14; compValCYMB = _ClipSlider15; break;
+        case 0 : compValRGBW = _ClipSlider00; compValCYMB = _ClipSlider01; compValRGBWA = _ClipSlider16; compValCYMBA = _ClipSlider17; break;
+        case 1 : compValRGBW = _ClipSlider02; compValCYMB = _ClipSlider03; compValRGBWA = _ClipSlider18; compValCYMBA = _ClipSlider19; break;
+        case 2 : compValRGBW = _ClipSlider04; compValCYMB = _ClipSlider05; compValRGBWA = _ClipSlider20; compValCYMBA = _ClipSlider21; break;
+        case 3 : compValRGBW = _ClipSlider06; compValCYMB = _ClipSlider07; compValRGBWA = _ClipSlider22; compValCYMBA = _ClipSlider23; break;
+        case 4 : compValRGBW = _ClipSlider08; compValCYMB = _ClipSlider09; compValRGBWA = _ClipSlider24; compValCYMBA = _ClipSlider25; break;
+        case 5 : compValRGBW = _ClipSlider10; compValCYMB = _ClipSlider11; compValRGBWA = _ClipSlider26; compValCYMBA = _ClipSlider27; break;
+        case 6 : compValRGBW = _ClipSlider12; compValCYMB = _ClipSlider13; compValRGBWA = _ClipSlider28; compValCYMBA = _ClipSlider29; break;
+        case 7 : compValRGBW = _ClipSlider14; compValCYMB = _ClipSlider15; compValRGBWA = _ClipSlider30; compValCYMBA = _ClipSlider31; break;
     }
 
     //Compares to Red, Green, Blue, and White against the first slider set
-    alphaToAdj *= lerp(1, 1-compValRGBW.r, IsColorMatch(i.clipMap.rgb, float3(1,0,0)));
-    alphaToAdj *= lerp(1, 1-compValRGBW.g, IsColorMatch(i.clipMap.rgb, float3(0,1,0)));
-    alphaToAdj *= lerp(1, 1-compValRGBW.b, IsColorMatch(i.clipMap.rgb, float3(0,0,1)));
-    alphaToAdj *= lerp(1, 1-compValRGBW.w, IsColorMatch(i.clipMap.rgb, float3(1,1,1)));
+    alphaToAdj *= lerp(1, 1-compValRGBW.r, IsColorMatch(i.clipMap.rgba, float4(1,0,0,0)));
+    alphaToAdj *= lerp(1, 1-compValRGBW.g, IsColorMatch(i.clipMap.rgba, float4(0,1,0,0)));
+    alphaToAdj *= lerp(1, 1-compValRGBW.b, IsColorMatch(i.clipMap.rgba, float4(0,0,1,0)));
+    alphaToAdj *= lerp(1, 1-compValRGBW.w, IsColorMatch(i.clipMap.rgba, float4(1,1,1,0)));
 
     //Compares to Cyan, Yellow, Magenta, and Black against the second slider set
-    alphaToAdj *= lerp(1, 1-compValCYMB.r, IsColorMatch(i.clipMap.rgb, float3(0,1,1)));
-    alphaToAdj *= lerp(1, 1-compValCYMB.g, IsColorMatch(i.clipMap.rgb, float3(1,1,0)));
-    alphaToAdj *= lerp(1, 1-compValCYMB.b, IsColorMatch(i.clipMap.rgb, float3(1,0,1)));
-    alphaToAdj *= lerp(1, 1-compValCYMB.w, IsColorMatch(i.clipMap.rgb, float3(0,0,0)));
+    alphaToAdj *= lerp(1, 1-compValCYMB.r, IsColorMatch(i.clipMap.rgba, float4(0,1,1,0)));
+    alphaToAdj *= lerp(1, 1-compValCYMB.g, IsColorMatch(i.clipMap.rgba, float4(1,1,0,0)));
+    alphaToAdj *= lerp(1, 1-compValCYMB.b, IsColorMatch(i.clipMap.rgba, float4(1,0,1,0)));
+    alphaToAdj *= lerp(1, 1-compValCYMB.w, IsColorMatch(i.clipMap.rgba, float4(0,0,0,0)));
+
+    //Adds alpha to comparison
+    alphaToAdj *= lerp(1, 1-compValRGBWA.r, IsColorMatch(i.clipMap.rgba, float4(1,0,0,1)));
+    alphaToAdj *= lerp(1, 1-compValRGBWA.g, IsColorMatch(i.clipMap.rgba, float4(0,1,0,1)));
+    alphaToAdj *= lerp(1, 1-compValRGBWA.b, IsColorMatch(i.clipMap.rgba, float4(0,0,1,1)));
+    alphaToAdj *= lerp(1, 1-compValRGBWA.w, IsColorMatch(i.clipMap.rgba, float4(1,1,1,1)));
+
+    alphaToAdj *= lerp(1, 1-compValCYMBA.r, IsColorMatch(i.clipMap.rgba, float4(0,1,1,1)));
+    alphaToAdj *= lerp(1, 1-compValCYMBA.g, IsColorMatch(i.clipMap.rgba, float4(1,1,0,1)));
+    alphaToAdj *= lerp(1, 1-compValCYMBA.b, IsColorMatch(i.clipMap.rgba, float4(1,0,1,1)));
+    alphaToAdj *= lerp(1, 1-compValCYMBA.w, IsColorMatch(i.clipMap.rgba, float4(0,0,0,1)));
 
     return alphaToAdj;
 }

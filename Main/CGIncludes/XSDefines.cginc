@@ -215,9 +215,13 @@ half _OutlineWidth;
 half _DissolveBlendPower, _DissolveLayer1Scale, _DissolveLayer2Scale, _DissolveLayer1Speed, _DissolveLayer2Speed;
 
 half4 _ClipSlider00,_ClipSlider01,_ClipSlider02,_ClipSlider03,
-     _ClipSlider04,_ClipSlider05,_ClipSlider06,_ClipSlider07,
-     _ClipSlider08,_ClipSlider09,_ClipSlider10,_ClipSlider11,
-     _ClipSlider12,_ClipSlider13,_ClipSlider14,_ClipSlider15;
+      _ClipSlider04,_ClipSlider05,_ClipSlider06,_ClipSlider07,
+      _ClipSlider08,_ClipSlider09,_ClipSlider10,_ClipSlider11,
+      _ClipSlider12,_ClipSlider13,_ClipSlider14,_ClipSlider15,
+      _ClipSlider16, _ClipSlider17, _ClipSlider18, _ClipSlider19,
+      _ClipSlider20, _ClipSlider21, _ClipSlider22, _ClipSlider23,
+      _ClipSlider24, _ClipSlider25, _ClipSlider26, _ClipSlider27,
+      _ClipSlider28, _ClipSlider29, _ClipSlider30, _ClipSlider31;
 
 int _ClipIndex;
 int _HalftoneType;

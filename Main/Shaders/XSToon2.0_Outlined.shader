@@ -160,6 +160,22 @@
         _ClipSlider13("", Vector) = (0,0,0,0)
         _ClipSlider14("", Vector) = (0,0,0,0)
         _ClipSlider15("", Vector) = (0,0,0,0)
+        _ClipSlider16("", Vector) = (0, 0, 0, 0)
+        _ClipSlider17("", Vector) = (0, 0, 0, 0)
+        _ClipSlider18("", Vector) = (0, 0, 0, 0)
+        _ClipSlider19("", Vector) = (0, 0, 0, 0)
+        _ClipSlider20("", Vector) = (0, 0, 0, 0)
+        _ClipSlider21("", Vector) = (0, 0, 0, 0)
+        _ClipSlider22("", Vector) = (0, 0, 0, 0)
+        _ClipSlider23("", Vector) = (0, 0, 0, 0)
+        _ClipSlider24("", Vector) = (0, 0, 0, 0)
+        _ClipSlider25("", Vector) = (0, 0, 0, 0)
+        _ClipSlider26("", Vector) = (0, 0, 0, 0)
+        _ClipSlider27("", Vector) = (0, 0, 0, 0)
+        _ClipSlider28("", Vector) = (0, 0, 0, 0)
+        _ClipSlider29("", Vector) = (0, 0, 0, 0)
+        _ClipSlider30("", Vector) = (0, 0, 0, 0)
+        _ClipSlider31("", Vector) = (0, 0, 0, 0)
 
         //!RDPSProps
     }

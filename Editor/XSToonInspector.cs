@@ -174,6 +174,22 @@ namespace XSToon
         private MaterialProperty _ClipSlider13 = null;
         private MaterialProperty _ClipSlider14 = null;
         private MaterialProperty _ClipSlider15 = null;
+        private MaterialProperty _ClipSlider16 = null;
+        private MaterialProperty _ClipSlider17 = null;
+        private MaterialProperty _ClipSlider18 = null;
+        private MaterialProperty _ClipSlider19 = null;
+        private MaterialProperty _ClipSlider20 = null;
+        private MaterialProperty _ClipSlider21 = null;
+        private MaterialProperty _ClipSlider22 = null;
+        private MaterialProperty _ClipSlider23 = null;
+        private MaterialProperty _ClipSlider24 = null;
+        private MaterialProperty _ClipSlider25 = null;
+        private MaterialProperty _ClipSlider26 = null;
+        private MaterialProperty _ClipSlider27 = null;
+        private MaterialProperty _ClipSlider28 = null;
+        private MaterialProperty _ClipSlider29 = null;
+        private MaterialProperty _ClipSlider30 = null;
+        private MaterialProperty _ClipSlider31 = null;
 
         //Material Properties for Patreon Plugins
         private MaterialProperty _LeftRightPan = null;
@@ -683,14 +699,14 @@ namespace XSToon
                         int materialClipIndex = material.GetInt("_ClipIndex");
                         switch (materialClipIndex)
                         {
-                            case 0: DrawVectorSliders(material, _ClipSlider00, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider01, "Cyan", "Yellow", "Magenta", "Black"); break;
-                            case 1: DrawVectorSliders(material, _ClipSlider02, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider03, "Cyan", "Yellow", "Magenta", "Black"); break;
-                            case 2: DrawVectorSliders(material, _ClipSlider04, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider05, "Cyan", "Yellow", "Magenta", "Black"); break;
-                            case 3: DrawVectorSliders(material, _ClipSlider06, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider07, "Cyan", "Yellow", "Magenta", "Black"); break;
-                            case 4: DrawVectorSliders(material, _ClipSlider08, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider09, "Cyan", "Yellow", "Magenta", "Black"); break;
-                            case 5: DrawVectorSliders(material, _ClipSlider10, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider11, "Cyan", "Yellow", "Magenta", "Black"); break;
-                            case 6: DrawVectorSliders(material, _ClipSlider12, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider13, "Cyan", "Yellow", "Magenta", "Black"); break;
-                            case 7: DrawVectorSliders(material, _ClipSlider14, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider15, "Cyan", "Yellow", "Magenta", "Black"); break;
+                            case 0: DrawVectorSliders(material, _ClipSlider00, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider01, "Cyan", "Yellow", "Magenta", "Black"); DrawVectorSliders(material, _ClipSlider16, "Red+A", "Green+A", "Blue+A", "White+A"); DrawVectorSliders(material, _ClipSlider17, "Cyan+A", "Yellow+A", "Magenta+A", "Black+A"); break;
+                            case 1: DrawVectorSliders(material, _ClipSlider02, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider03, "Cyan", "Yellow", "Magenta", "Black"); DrawVectorSliders(material, _ClipSlider18, "Red+A", "Green+A", "Blue+A", "White+A"); DrawVectorSliders(material, _ClipSlider19, "Cyan+A", "Yellow+A", "Magenta+A", "Black+A"); break;
+                            case 2: DrawVectorSliders(material, _ClipSlider04, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider05, "Cyan", "Yellow", "Magenta", "Black"); DrawVectorSliders(material, _ClipSlider20, "Red+A", "Green+A", "Blue+A", "White+A"); DrawVectorSliders(material, _ClipSlider21, "Cyan+A", "Yellow+A", "Magenta+A", "Black+A"); break;
+                            case 3: DrawVectorSliders(material, _ClipSlider06, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider07, "Cyan", "Yellow", "Magenta", "Black"); DrawVectorSliders(material, _ClipSlider22, "Red+A", "Green+A", "Blue+A", "White+A"); DrawVectorSliders(material, _ClipSlider23, "Cyan+A", "Yellow+A", "Magenta+A", "Black+A"); break;
+                            case 4: DrawVectorSliders(material, _ClipSlider08, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider09, "Cyan", "Yellow", "Magenta", "Black"); DrawVectorSliders(material, _ClipSlider24, "Red+A", "Green+A", "Blue+A", "White+A"); DrawVectorSliders(material, _ClipSlider25, "Cyan+A", "Yellow+A", "Magenta+A", "Black+A"); break;
+                            case 5: DrawVectorSliders(material, _ClipSlider10, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider11, "Cyan", "Yellow", "Magenta", "Black"); DrawVectorSliders(material, _ClipSlider26, "Red+A", "Green+A", "Blue+A", "White+A"); DrawVectorSliders(material, _ClipSlider27, "Cyan+A", "Yellow+A", "Magenta+A", "Black+A"); break;
+                            case 6: DrawVectorSliders(material, _ClipSlider12, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider13, "Cyan", "Yellow", "Magenta", "Black"); DrawVectorSliders(material, _ClipSlider28, "Red+A", "Green+A", "Blue+A", "White+A"); DrawVectorSliders(material, _ClipSlider29, "Cyan+A", "Yellow+A", "Magenta+A", "Black+A"); break;
+                            case 7: DrawVectorSliders(material, _ClipSlider14, "Red", "Green", "Blue", "White"); DrawVectorSliders(material, _ClipSlider15, "Cyan", "Yellow", "Magenta", "Black"); DrawVectorSliders(material, _ClipSlider30, "Red+A", "Green+A", "Blue+A", "White+A"); DrawVectorSliders(material, _ClipSlider31, "Cyan+A", "Yellow+A", "Magenta+A", "Black+A"); break;
                         }
                     }
 
