@@ -156,6 +156,7 @@ namespace XSToon
         private MaterialProperty _DissolveLayer2Scale = null;
         private MaterialProperty _DissolveLayer1Speed = null;
         private MaterialProperty _DissolveLayer2Speed = null;
+        private MaterialProperty _DissolveRemap = null;
         private MaterialProperty _ClipMask = null;
         private MaterialProperty _ClipIndex = null;
         private MaterialProperty _ClipSlider00 = null;
@@ -402,6 +403,7 @@ namespace XSToon
                     materialEditor.TexturePropertySingleLine(new GUIContent("Dissolve Texture", "Noise texture used to control up dissolve pattern"), _DissolveTexture, _DissolveColor);
                     materialEditor.TextureScaleOffsetProperty(_DissolveTexture);
                     materialEditor.ShaderProperty(_UVSetDissolve, new GUIContent("UV Set", "The UV set to use for the Dissolve Texture."), 2);
+                    materialEditor.ShaderProperty(_DissolveRemap, new GUIContent("Remap Values", "Set the new min and new max of remap."), 2);
 
                     materialEditor.ShaderProperty(_DissolveBlendPower, new GUIContent("Layer Blend", "How much to boost the blended layers"));
                     materialEditor.ShaderProperty(_DissolveLayer1Scale, new GUIContent("Layer 1 Scale", "How much tiling to apply to the layer."));

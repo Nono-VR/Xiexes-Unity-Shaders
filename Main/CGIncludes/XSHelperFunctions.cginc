@@ -328,15 +328,15 @@ void calcDissolve(inout XSLighting i, inout float4 col)
             float time2 = _Time.y * _DissolveLayer2Speed;
             float3 append1 = (float3((vertex3Pos.x + (time1)) * (_SimplexScale.x * _DissolveLayer1Scale), (vertex3Pos.y + (time1 * -2)) * (_SimplexScale.y * _DissolveLayer1Scale), (vertex3Pos.z + (time1 * 1.5)) * (_SimplexScale.z * _DissolveLayer1Scale)));
             float3 append2 = (float3((vertex3Pos.x + (time2 * 1.5)) * (_SimplexScale.x * _DissolveLayer2Scale), (vertex3Pos.y + (time2)) * (_SimplexScale.y * _DissolveLayer2Scale), (vertex3Pos.z + (time2 * 2)) * (_SimplexScale.z * _DissolveLayer2Scale)));
-            float simplex1 = simplex3d(append1.xyz);
-            float simplex2 = simplex3d(append2.xyz);
-            mask = Remap_Float(simplex1, float2(-1, 1), float2(0, 1)) * Remap_Float(simplex2, float2(-1, 1), float2(0, 1)) * _DissolveBlendPower;
+            float simplex1 = voronoi(append1.xyz);
+            float simplex2 = voronoi(append2.xyz);
+            mask = (simplex1) * (simplex2) * _DissolveBlendPower;
         }
         else
         {
             mask = i.dissolveMask.x * i.dissolveMaskSecondLayer.x * _DissolveBlendPower;
         }
-        half dissolveAmt = Remap_Float(mask, float2(0,1), float2(0.25, 0.75));
+        half dissolveAmt = Remap_Float(mask, float2(0, 1), float2(_DissolveRemap.x, _DissolveRemap.y));
         half dissolveProgress = saturate(_DissolveProgress + lerp(0, 1-AdjustAlphaUsingTextureArray(i, 1), _UseClipsForDissolve));
         half dissolve = 0;
         if (_DissolveCoordinates == 0)
