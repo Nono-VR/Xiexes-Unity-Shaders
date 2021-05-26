@@ -384,6 +384,7 @@ half4 calcEmission(XSLighting i, DotProducts d, half lightAvg)
         if(_EmissionAudioLinkChannel == 0)
         {
             emission = lerp(i.emissionMap, i.emissionMap * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor;
+            emission += lerp(i.emissionMap2, i.emissionMap2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor2;
         }
         else
         {
@@ -397,6 +398,7 @@ half4 calcEmission(XSLighting i, DotProducts d, half lightAvg)
                     int2 aluv = int2(0, (_EmissionAudioLinkChannel-1));
                     float alink = lerp(1, AudioLinkData(aluv).x , saturate(_EmissionAudioLinkChannel));
                     emission = lerp(i.emissionMap, i.emissionMap * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor * alink;
+                    emission += lerp(i.emissionMap2, i.emissionMap2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor2;
                 }
                 else
                 {
@@ -409,6 +411,7 @@ half4 calcEmission(XSLighting i, DotProducts d, half lightAvg)
                     float4 emissionChannelGreen = i.emissionMap.g * _EmissionColor0 * audioDataMids;
                     float4 emissionChannelBlue = i.emissionMap.b * _EmissionColor1 * audioDataHighs;
                     emission = (emissionChannelRed + emissionChannelGreen + emissionChannelBlue) * lerp(1, i.diffuseColor.rgbb, _EmissionToDiffuse);
+                    emission += lerp(i.emissionMap2, i.emissionMap2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor2;
                 }
             }
         }

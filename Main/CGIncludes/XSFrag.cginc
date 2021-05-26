@@ -62,6 +62,7 @@ float4 frag (
         o.occlusion = tex2D(_OcclusionMap, t.occlusionUV);
         o.reflectivityMask = UNITY_SAMPLE_TEX2D_SAMPLER(_ReflectivityMask, _MainTex, t.reflectivityMaskUV) * _Reflectivity;
         o.emissionMap = UNITY_SAMPLE_TEX2D_SAMPLER(_EmissionMap, _MainTex, t.emissionMapUV);
+        o.emissionMap2 = UNITY_SAMPLE_TEX2D_SAMPLER(_EmissionMap2, _MainTex, t.emissionMapUV);
         o.rampMask = UNITY_SAMPLE_TEX2D_SAMPLER(_RampSelectionMask, _MainTex, i.uv); // This texture doesn't need to ever be on a second uv channel, and doesn't need tiling, convince me otherwise.
         o.hsvMask = UNITY_SAMPLE_TEX2D_SAMPLER(_HSVMask, _MainTex, t.albedoUV);
         o.clipMap = tex2Dlod(_ClipMask, float4(t.clipMapUV, 0, 0));

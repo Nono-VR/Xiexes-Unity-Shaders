@@ -45,6 +45,7 @@
 
         [Enum(Yes,0, No,1)] _ScaleWithLight("Emission Scale w/ Light", Int) = 1
         _EmissionMap("Emission Map", 2D) = "white" {}
+        _EmissionMap2("Emission Map", 2D) = "white" {}
         _EmissionToDiffuse("Emission Tint To Diffuse", Range(0,1)) = 0
         _ScaleWithLightSensitivity("Scaling Sensitivity", Range(0,1)) = 1
 
@@ -134,6 +135,7 @@
         [HDR]_EmissionColor("Emission Color", Color) = (0,0,0,0)
         [HDR]_EmissionColor0("Emission Packed Color 1", Color) = (0,0,0,0)
         [HDR]_EmissionColor1("Emission Packed Color 2", Color) = (0,0,0,0)
+        [HDR]_EmissionColor2("Emission Color 2", Color) = (0, 0, 0, 0)
 
         _ClipMap("Clip Map", 2D) = "black" {}
         _WireColor("Wire Color", Color) = (0,0,0,0)

@@ -100,6 +100,7 @@ struct XSLighting
     half4 thickness;
     half4 occlusion;
     half4 emissionMap;
+    half4 emissionMap2;
     half4 rampMask;
     half4 hsvMask;
     half4 clipMap;
@@ -169,6 +170,7 @@ UNITY_DECLARE_TEX2D_NOSAMPLER(_MetallicGlossMap); half4 _MetallicGlossMap_ST;
 UNITY_DECLARE_TEX2D_NOSAMPLER(_ReflectivityMask); half4 _ReflectivityMask_ST;
 UNITY_DECLARE_TEX2D_NOSAMPLER(_ThicknessMap); half4 _ThicknessMap_ST;
 UNITY_DECLARE_TEX2D_NOSAMPLER(_EmissionMap); half4 _EmissionMap_ST;
+UNITY_DECLARE_TEX2D_NOSAMPLER(_EmissionMap2); half4 _EmissionMap2_ST;
 UNITY_DECLARE_TEX2D_NOSAMPLER(_RampSelectionMask);
 UNITY_DECLARE_TEX2D_NOSAMPLER(_HSVMask);
 sampler2D _OcclusionMap; half4 _OcclusionMap_ST;
@@ -192,7 +194,7 @@ int _UseSimplexNoise;
 half3 _SimplexScale;
 
 half4 _ShadowRim, _OutlineColor, _SSColor,
-      _EmissionColor, _EmissionColor0, _EmissionColor1,
+      _EmissionColor, _EmissionColor0, _EmissionColor1, _EmissionColor2,
       _MatcapTint, _RimColor, _DissolveColor;
 
 half _MatcapTintToDiffuse;
