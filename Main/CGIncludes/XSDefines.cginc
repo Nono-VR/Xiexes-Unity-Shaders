@@ -112,7 +112,6 @@ struct XSLighting
     half3 bitangent;
     half4 worldPos;
     half3 color;
-    half alpha;
     float isOutline;
     float4 screenPos;
     float2 screenUV;
@@ -136,6 +135,7 @@ struct TextureUV
     half2 outlineMaskUV;
     half2 clipMapUV;
     half2 dissolveUV;
+    half2 audioLinkUV;
 };
 
 struct DotProducts
@@ -177,8 +177,6 @@ sampler2D _ClipMask;
 sampler2D _Matcap;
 sampler2D _Ramp;
 samplerCUBE _BakedCubemap;
-sampler2D _GrabTexture;
-float4 _GrabTexture_TexelSize;
 
 #if defined(UNITY_PASS_SHADOWCASTER)
     sampler3D _DitherMaskLOD;
@@ -193,10 +191,9 @@ int _UseClipsForDissolve;
 int _UseSimplexNoise;
 half3 _SimplexScale;
 
-half4 _ShadowRim,
-      _OutlineColor, _SSColor,
-      _EmissionColor, _MatcapTint,
-      _RimColor, _DissolveColor;
+half4 _ShadowRim, _OutlineColor, _SSColor,
+      _EmissionColor, _EmissionColor0, _EmissionColor1,
+      _MatcapTint, _RimColor, _DissolveColor;
 
 half _MatcapTintToDiffuse;
 
@@ -229,7 +226,7 @@ int _HalftoneType;
 int _FadeDither;
 int _BlendMode;
 int _OcclusionMode;
-int _UseRefraction;
+int _EmissionAudioLink, _EmissionAudioLinkChannel;
 int _ReflectionMode, _ReflectionBlendMode, _ClearCoat;
 int _TilingMode, _VertexColorAlbedo, _ScaleWithLight;
 int _OutlineAlbedoTint, _OutlineLighting, _OutlineNormalMode;
