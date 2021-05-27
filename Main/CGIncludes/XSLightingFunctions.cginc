@@ -426,10 +426,10 @@ half4 calcEmission(FragmentData i, DotProducts d, half lightAvg)
                     {
 
                         float audioDataBass = AudioLinkData(int2(0, 0)).x;
-                        //float audioDataMids = AudioLinkData(int2(0, 1)).x;
-                        float audioDataMids = AudioLinkData(int2(0, 2)).x;
-                        float audioDataHighs = AudioLinkData(int2(0, 3)).x;
-                        //float audioDataHighs = (AudioLinkData(int2(0, 2)).x + AudioLinkData(int2(0, 3)).x) * 0.5;
+                        float audioDataMids = AudioLinkData(int2(0, 1)).x;
+                        //float audioDataMids = AudioLinkData(int2(0, 2)).x;
+                        //float audioDataHighs = AudioLinkData(int2(0, 3)).x;
+                        float audioDataHighs = (AudioLinkData(int2(0, 2)).x + AudioLinkData(int2(0, 3)).x) * 0.5;
 
                         half distToCenter1 = clamp(Remap_Float(1 - i.objPos.y, float2(_AudioLink1Remap.x, _AudioLink1Remap.y), float2(0,1)),0,1);
                         half distToCenter2 = clamp(Remap_Float(1 - i.objPos.y, float2(_AudioLink2Remap.x, _AudioLink2Remap.y), float2(0, 1)), 0, 1);

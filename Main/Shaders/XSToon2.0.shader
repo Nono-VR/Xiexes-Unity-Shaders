@@ -104,10 +104,12 @@
         _SimplexScale("Simplex Scale", Vector) = (10, 10, 10)
         _DissolveTexture("Dissolve Texture", 2D) = "black" {}
         _DissolveBlendPower("Layer Blend Power", Float) = 1
-        _DissolveLayer1Scale("Layer1 Scale", Float) = 1
-        _DissolveLayer2Scale("Layer2 Scale", Float) = 0.5
+        _DissolveLayer1Scale("Layer1 Scale", Float) = 0.5
+        _DissolveLayer2Scale("Layer2 Scale", Float) = 1
+        _DissolveLayer3Scale("Layer3 Scale", Float) = 1.7
         _DissolveLayer1Speed("Layer1 Speed", Float) = 0
         _DissolveLayer2Speed("Layer2 Speed", Float) = 0
+        _DissolveLayer3Speed("Layer3 Speed", Float) = 0
         _DissolveRemap("Remap Values", Vector) = (0,1,0,0)
         _AudioLink1Remap("Remap Values", Vector) = (0, 1, 0, 0)
         _AudioLink2Remap("Remap Values", Vector) = (0, 1, 0, 0)

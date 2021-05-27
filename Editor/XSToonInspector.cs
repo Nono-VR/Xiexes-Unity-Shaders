@@ -158,8 +158,10 @@ namespace XSToon
         private MaterialProperty _DissolveBlendPower = null;
         private MaterialProperty _DissolveLayer1Scale = null;
         private MaterialProperty _DissolveLayer2Scale = null;
+        private MaterialProperty _DissolveLayer3Scale = null;
         private MaterialProperty _DissolveLayer1Speed = null;
         private MaterialProperty _DissolveLayer2Speed = null;
+        private MaterialProperty _DissolveLayer3Speed = null;
         private MaterialProperty _DissolveRemap = null;
         private MaterialProperty _AudioLink1Remap = null;
         private MaterialProperty _AudioLink2Remap = null;
@@ -406,11 +408,14 @@ namespace XSToon
                     materialEditor.ShaderProperty(_DissolveRemap, new GUIContent("Remap Values", "Set the new min and new max of remap."), 2);
 
                     materialEditor.ShaderProperty(_DissolveBlendPower, new GUIContent("Layer Blend", "How much to boost the blended layers"));
-                    materialEditor.ShaderProperty(_DissolveLayer1Scale, new GUIContent("Layer 1 Scale", "How much tiling to apply to the layer."));
-                    materialEditor.ShaderProperty(_DissolveLayer1Speed, new GUIContent("Layer 1 Speed", "Scroll Speed of the layer, can be negative."));
 
+                    materialEditor.ShaderProperty(_DissolveLayer1Scale, new GUIContent("Layer 1 Scale", "How much tiling to apply to the layer."));
                     materialEditor.ShaderProperty(_DissolveLayer2Scale, new GUIContent("Layer 2 Scale", "How much tiling to apply to the layer."));
+                    materialEditor.ShaderProperty(_DissolveLayer3Scale, new GUIContent("Layer 3 Scale", "How much tiling to apply to the layer."));
+
+                    materialEditor.ShaderProperty(_DissolveLayer1Speed, new GUIContent("Layer 1 Speed", "Scroll Speed of the layer, can be negative."));
                     materialEditor.ShaderProperty(_DissolveLayer2Speed, new GUIContent("Layer 2 Speed", "Scroll Speed of the layer, can be negative."));
+                    materialEditor.ShaderProperty(_DissolveLayer3Speed, new GUIContent("Layer 3 Speed", "Scroll Speed of the layer, can be negative."));
 
                     materialEditor.ShaderProperty(_DissolveStrength, new GUIContent("Dissolve Sharpness", "Sharpness of the dissolve texture."));
                     materialEditor.ShaderProperty(_DissolveProgress, new GUIContent("Dissolve Progress", "Progress of the dissolve effect."));
