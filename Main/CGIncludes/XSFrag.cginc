@@ -85,6 +85,7 @@ float4 frag (
         o.screenPos = i.screenPos;
         o.objPos = i.objPos;
 
+        float alpha = o.albedo.a;
         float3 vertex3Pos = mul(unity_WorldToObject, i.worldPos);
         float time1 = _Time.y * _DissolveLayer1Speed;
         float time2 = _Time.y * _DissolveLayer2Speed;
@@ -96,10 +97,10 @@ float4 frag (
         #if defined(Fur)
             o.layer = i.layer;
             AdjustAlbedo(o, t);
+            DoFurAlpha(o,t,alpha);
         #endif
 
         float4 col = BRDF_XSLighting(o,t);
-        float alpha = o.albedo.a;
         calcAlpha(o, t, alpha);
         calcDissolve(o, col.rgb);
         UNITY_APPLY_FOG(i.fogCoord, col);
