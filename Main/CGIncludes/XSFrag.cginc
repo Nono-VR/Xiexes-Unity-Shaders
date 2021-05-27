@@ -23,8 +23,12 @@ float4 frag (
         o.screenPos = i.screenPos;
         o.objPos = i.objPos;
 
+        #if defined(Fur)
+            o.layer = i.layer;
+        #endif
+
         float alpha = o.albedo.a;
-        calcAlpha(o, alpha);
+        calcAlpha(o, t, alpha);
         calcDissolve(o, o.albedo.rgb);
         return alpha;
     #else
@@ -89,10 +93,14 @@ float4 frag (
         o.noise1 = voronoi(float3((vertex3Pos.x + (time1)) * (_SimplexScale.x * _DissolveLayer1Scale), (vertex3Pos.y + (time1 * -2)) * (_SimplexScale.y * _DissolveLayer1Scale), (vertex3Pos.z + (time1 * 1.5)) * (_SimplexScale.z * _DissolveLayer1Scale)));
         o.noise2 = voronoi(float3((vertex3Pos.x + (time2 * 1.5)) * (_SimplexScale.x * _DissolveLayer2Scale), (vertex3Pos.y + (time2)) * (_SimplexScale.y * _DissolveLayer2Scale), (vertex3Pos.z + (time2 * 2)) * (_SimplexScale.z * _DissolveLayer2Scale)));
         o.noise3 = voronoi(float3((vertex3Pos.x + (time3 * .7)) * (_SimplexScale.x * _DissolveLayer3Scale), (vertex3Pos.y + (time3 * -.5)) * (_SimplexScale.y * _DissolveLayer3Scale), (vertex3Pos.z + (time3 * 2.7)) * (_SimplexScale.z * _DissolveLayer3Scale)));
+        #if defined(Fur)
+            o.layer = i.layer;
+            AdjustAlbedo(o, t);
+        #endif
 
         float4 col = BRDF_XSLighting(o,t);
         float alpha = o.albedo.a;
-        calcAlpha(o, alpha);
+        calcAlpha(o, t, alpha);
         calcDissolve(o, col.rgb);
         UNITY_APPLY_FOG(i.fogCoord, col);
         return float4(col.rgb, alpha);
