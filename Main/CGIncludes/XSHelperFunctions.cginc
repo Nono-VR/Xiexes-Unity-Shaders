@@ -323,14 +323,15 @@ void calcDissolve(inout XSLighting i, inout float3 col)
         float4 mask;
         if (_UseSimplexNoise)
         {
-            float3 vertex3Pos = mul(unity_WorldToObject, i.worldPos);
-            float time1 = _Time.y * _DissolveLayer1Speed;
-            float time2 = _Time.y * _DissolveLayer2Speed;
-            float3 append1 = (float3((vertex3Pos.x + (time1)) * (_SimplexScale.x * _DissolveLayer1Scale), (vertex3Pos.y + (time1 * -2)) * (_SimplexScale.y * _DissolveLayer1Scale), (vertex3Pos.z + (time1 * 1.5)) * (_SimplexScale.z * _DissolveLayer1Scale)));
-            float3 append2 = (float3((vertex3Pos.x + (time2 * 1.5)) * (_SimplexScale.x * _DissolveLayer2Scale), (vertex3Pos.y + (time2)) * (_SimplexScale.y * _DissolveLayer2Scale), (vertex3Pos.z + (time2 * 2)) * (_SimplexScale.z * _DissolveLayer2Scale)));
-            float simplex1 = voronoi(append1.xyz);
-            float simplex2 = voronoi(append2.xyz);
-            mask = (simplex1) * (simplex2) * _DissolveBlendPower;
+            //float3 vertex3Pos = mul(unity_WorldToObject, i.worldPos);
+            //float time1 = _Time.y * _DissolveLayer1Speed;
+            //float time2 = _Time.y * _DissolveLayer2Speed;
+            //float3 append1 = (float3((vertex3Pos.x + (time1)) * (_SimplexScale.x * _DissolveLayer1Scale), (vertex3Pos.y + (time1 * -2)) * (_SimplexScale.y * _DissolveLayer1Scale), (vertex3Pos.z + (time1 * 1.5)) * (_SimplexScale.z * _DissolveLayer1Scale)));
+            //float3 append2 = (float3((vertex3Pos.x + (time2 * 1.5)) * (_SimplexScale.x * _DissolveLayer2Scale), (vertex3Pos.y + (time2)) * (_SimplexScale.y * _DissolveLayer2Scale), (vertex3Pos.z + (time2 * 2)) * (_SimplexScale.z * _DissolveLayer2Scale)));
+            //float simplex1 = voronoi(append1.xyz);
+            //float simplex2 = voronoi(append2.xyz);
+            float noise = i.noise1 * i.noise2;
+            mask = noise * _DissolveBlendPower;
         }
         else
         {

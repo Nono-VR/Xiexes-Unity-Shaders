@@ -390,25 +390,66 @@ half4 calcEmission(XSLighting i, DotProducts d, half lightAvg)
         {
             if(AudioLinkIsAvailableNonSurface())
             {
-                if(_EmissionAudioLinkChannel != 5)
+                if (false)
                 {
-                    int2 aluv = int2(0, (_EmissionAudioLinkChannel-1));
-                    float alink = lerp(1, AudioLinkData(aluv).x , saturate(_EmissionAudioLinkChannel));
-                    emission = lerp(i.emissionMap, i.emissionMap * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor * alink;
-                    emission += lerp(i.emissionMap2, i.emissionMap2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor2;
+                    if (_EmissionAudioLinkChannel != 5)
+                    {
+                        int2 aluv = int2(0, (_EmissionAudioLinkChannel - 1));
+                        float alink = lerp(1, AudioLinkData(aluv).x, saturate(_EmissionAudioLinkChannel));
+                        emission = lerp(i.emissionMap, i.emissionMap * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor * alink;
+                        emission += lerp(i.emissionMap2, i.emissionMap2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor2;
+                    }
+                    else
+                    {
+
+                        float audioDataBass = AudioLinkData(int2(0, 0)).x;
+                        float audioDataMids = AudioLinkData(int2(0, 1)).x;
+                        float audioDataHighs = (AudioLinkData(int2(0, 2)).x + AudioLinkData(int2(0, 3)).x) * 0.5;
+
+                        float4 emissionChannelRed = i.emissionMap.r * _EmissionColor * audioDataBass;
+                        float4 emissionChannelGreen = i.emissionMap.g * _EmissionColor0 * audioDataMids;
+                        float4 emissionChannelBlue = i.emissionMap.b * _EmissionColor1 * audioDataHighs;
+                        emission = (emissionChannelRed + emissionChannelGreen + emissionChannelBlue) * lerp(1, i.diffuseColor.rgbb, _EmissionToDiffuse);
+                        emission += lerp(i.emissionMap2, i.emissionMap2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor2;
+                    }
                 }
                 else
                 {
+                    if (_EmissionAudioLinkChannel != 5)
+                    {
+                        int2 aluv = int2(0, (_EmissionAudioLinkChannel - 1));
+                        float alink = lerp(1, AudioLinkData(aluv).x, saturate(_EmissionAudioLinkChannel));
+                        emission = lerp(i.noise1 * i.noise2, -i.noise1 * -i.noise2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor * alink;
+                        emission += lerp(i.emissionMap2, i.emissionMap2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor2;
+                    }
+                    else
+                    {
 
-                    float audioDataBass = AudioLinkData(int2(0,0)).x;
-                    float audioDataMids = AudioLinkData(int2(0,1)).x;
-                    float audioDataHighs = (AudioLinkData(int2(0,2)).x + AudioLinkData(int2(0,3)).x) * 0.5;
+                        float audioDataBass = AudioLinkData(int2(0, 0)).x;
+                        //float audioDataMids = AudioLinkData(int2(0, 1)).x;
+                        float audioDataMids = AudioLinkData(int2(0, 2)).x;
+                        float audioDataHighs = AudioLinkData(int2(0, 3)).x;
+                        //float audioDataHighs = (AudioLinkData(int2(0, 2)).x + AudioLinkData(int2(0, 3)).x) * 0.5;
 
-                    float4 emissionChannelRed = i.emissionMap.r * _EmissionColor * audioDataBass;
-                    float4 emissionChannelGreen = i.emissionMap.g * _EmissionColor0 * audioDataMids;
-                    float4 emissionChannelBlue = i.emissionMap.b * _EmissionColor1 * audioDataHighs;
-                    emission = (emissionChannelRed + emissionChannelGreen + emissionChannelBlue) * lerp(1, i.diffuseColor.rgbb, _EmissionToDiffuse);
-                    emission += lerp(i.emissionMap2, i.emissionMap2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor2;
+                        half distToCenter1 = clamp(Remap_Float(1 - i.objPos.y, float2(_AudioLink1Remap.x, _AudioLink1Remap.y), float2(0,1)),0,1);
+                        half distToCenter2 = clamp(Remap_Float(1 - i.objPos.y, float2(_AudioLink2Remap.x, _AudioLink2Remap.y), float2(0, 1)), 0, 1);
+                        half distToCenter3 = clamp(Remap_Float(1 - i.objPos.y, float2(_AudioLink3Remap.x, _AudioLink3Remap.y), float2(0, 1)), 0, 1);
+
+                        //half distToCenter = ((1 - i.objPos.z) * 0.5 + 0.5);
+
+                        half tempNoise1 = smoothstep(audioDataHighs, audioDataHighs + .2, i.noise1 * i.noise3 * distToCenter1);
+                        half tempNoise2 = smoothstep(audioDataMids, audioDataMids + .2, i.noise2 * i.noise1 * distToCenter2);
+                        half tempNoise3 = smoothstep(audioDataBass, audioDataBass + .2, i.noise3 * i.noise2 * distToCenter3);
+
+                        float4 emissionChannelRed = i.emissionMap.r * tempNoise3 * _EmissionColor * audioDataBass;
+                        float4 emissionChannelGreen = i.emissionMap.g * tempNoise2 * _EmissionColor0 * audioDataMids;
+                        float4 emissionChannelBlue = i.emissionMap.b * tempNoise1 * _EmissionColor1 * audioDataHighs;
+                        //float4 emissionChannelGreen = (i.noise2 * _EmissionColor0 * audioDataMids) * distToCenter * 2;
+                        //float4 emissionChannelBlue = (i.noise1 * i.noise2 * _EmissionColor1 * audioDataHighs) * distToCenter * 2;
+                        emission = (emissionChannelRed + emissionChannelGreen + emissionChannelBlue) * lerp(1, i.diffuseColor.rgbb, _EmissionToDiffuse);
+                        //emission = float4(distToCenter2, distToCenter2, distToCenter2, 1);
+                        emission += lerp(i.emissionMap2, i.emissionMap2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor2;
+                    }
                 }
             }
         }

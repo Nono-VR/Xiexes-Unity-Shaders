@@ -117,6 +117,9 @@ struct XSLighting
     float4 screenPos;
     float2 screenUV;
     float3 objPos;
+    float noise1;
+    float noise2;
+    float noise3;
 };
 
 struct TextureUV
@@ -223,6 +226,9 @@ half4 _ClipSlider00,_ClipSlider01,_ClipSlider02,_ClipSlider03,
       _ClipSlider28, _ClipSlider29, _ClipSlider30, _ClipSlider31;
 
 half2 _DissolveRemap;
+half2 _AudioLink1Remap;
+half2 _AudioLink2Remap;
+half2 _AudioLink3Remap;
 int _ClipIndex;
 int _HalftoneType;
 int _FadeDither;

@@ -161,6 +161,9 @@ namespace XSToon
         private MaterialProperty _DissolveLayer1Speed = null;
         private MaterialProperty _DissolveLayer2Speed = null;
         private MaterialProperty _DissolveRemap = null;
+        private MaterialProperty _AudioLink1Remap = null;
+        private MaterialProperty _AudioLink2Remap = null;
+        private MaterialProperty _AudioLink3Remap = null;
         private MaterialProperty _ClipMask = null;
         private MaterialProperty _ClipIndex = null;
         private MaterialProperty _ClipSlider00 = null;
@@ -621,10 +624,13 @@ namespace XSToon
 
                     materialEditor.TexturePropertySingleLine(new GUIContent("Emission Map", "Emissive map. White to black, unless you want multiple colors. Setting to Packed Map for Audio Link will change the color per channel."), _EmissionMap);
                     materialEditor.TextureScaleOffsetProperty(_EmissionMap);
-                    materialEditor.TexturePropertySingleLine(new GUIContent("Emission Map 2", "Emissive map 2."), _EmissionMap2, _EmissionColor);
+                    materialEditor.TexturePropertySingleLine(new GUIContent("Emission Map 2", "Emissive map 2."), _EmissionMap2, _EmissionColor2);
                     materialEditor.TextureScaleOffsetProperty(_EmissionMap2);
                     materialEditor.ShaderProperty(_UVSetEmission, new GUIContent("UV Set", "The UV set to use for the Emission Map"), 2);
                     materialEditor.ShaderProperty(_EmissionToDiffuse, new GUIContent("Tint To Diffuse", "Tints the emission to the Diffuse Color"), 2);
+                    materialEditor.ShaderProperty(_AudioLink1Remap, new GUIContent("Remap Values", "Set the new min and new max of remap."), 2);
+                    materialEditor.ShaderProperty(_AudioLink2Remap, new GUIContent("Remap Values", "Set the new min and new max of remap."), 2);
+                    materialEditor.ShaderProperty(_AudioLink3Remap, new GUIContent("Remap Values", "Set the new min and new max of remap."), 2);
                 }
 
                 XSStyles.SeparatorThin();

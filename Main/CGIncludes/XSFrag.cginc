@@ -81,6 +81,15 @@ float4 frag (
         o.screenPos = i.screenPos;
         o.objPos = i.objPos;
 
+        float3 vertex3Pos = mul(unity_WorldToObject, i.worldPos);
+        float time1 = _Time.y * _DissolveLayer1Speed;
+        float time2 = _Time.y * _DissolveLayer2Speed;
+        float time3 = _Time.y * _DissolveLayer2Speed;
+
+        o.noise1 = voronoi(float3((vertex3Pos.x + (time1)) * (_SimplexScale.x * _DissolveLayer1Scale), (vertex3Pos.y + (time1 * -2)) * (_SimplexScale.y * _DissolveLayer1Scale), (vertex3Pos.z + (time1 * 1.5)) * (_SimplexScale.z * _DissolveLayer1Scale)));
+        o.noise2 = voronoi(float3((vertex3Pos.x + (time2 * 1.5)) * (_SimplexScale.x * _DissolveLayer2Scale), (vertex3Pos.y + (time2)) * (_SimplexScale.y * _DissolveLayer2Scale), (vertex3Pos.z + (time2 * 2)) * (_SimplexScale.z * _DissolveLayer2Scale)));
+        o.noise3 = voronoi(float3((vertex3Pos.x + (time3 * .7)) * (_SimplexScale.x * _DissolveLayer2Scale * .7), (vertex3Pos.y + (time3 * .5)) * (_SimplexScale.y * _DissolveLayer2Scale * .7), (vertex3Pos.z + (time3 * 2.7)) * (_SimplexScale.z * _DissolveLayer2Scale * .7)));
+
         float4 col = BRDF_XSLighting(o,t);
         float alpha = o.albedo.a;
         calcAlpha(o, alpha);
