@@ -437,9 +437,9 @@ half4 calcEmission(FragmentData i, DotProducts d, half lightAvg)
 
                         //half distToCenter = ((1 - i.objPos.z) * 0.5 + 0.5);
 
-                        half tempNoise1 = smoothstep(audioDataHighs, audioDataHighs + .2, i.noise1 * i.noise3 * distToCenter1);
-                        half tempNoise2 = smoothstep(audioDataMids, audioDataMids + .2, i.noise2 * i.noise1 * distToCenter2);
-                        half tempNoise3 = smoothstep(audioDataBass, audioDataBass + .2, i.noise3 * i.noise2 * distToCenter3);
+                        half tempNoise1 = smoothstep(audioDataHighs, audioDataHighs + .1, i.noise1 * i.noise3 * distToCenter1);
+                        half tempNoise2 = smoothstep(audioDataMids, audioDataMids + .1, i.noise2 * i.noise1 * distToCenter2);
+                        half tempNoise3 = smoothstep(audioDataBass, audioDataBass + .1, i.noise3 * i.noise2 * distToCenter3);
 
                         float4 emissionChannelRed = i.emissionMap.r * tempNoise3 * _EmissionColor * audioDataBass;
                         float4 emissionChannelGreen = i.emissionMap.g * tempNoise2 * _EmissionColor0 * audioDataMids;
