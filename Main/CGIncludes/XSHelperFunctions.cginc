@@ -1,4 +1,4 @@
-void calcNormal(inout XSLighting i)
+void calcNormal(inout FragmentData i)
 {
     if(_NormalMapMode == 0)
     {
@@ -219,7 +219,7 @@ half3 getReflectionUV(half3 direction, half3 position, half4 cubemapPosition, ha
     return direction;
 }
 
-half3 getEnvMap(XSLighting i, DotProducts d, float blur, half3 reflDir, half3 indirectLight, half3 wnormal)
+half3 getEnvMap(FragmentData i, DotProducts d, float blur, half3 reflDir, half3 indirectLight, half3 wnormal)
 {//This function handls Unity style reflections, Matcaps, and a baked in fallback cubemap.
     half3 envMap = half3(0,0,0);
 
@@ -273,7 +273,7 @@ bool IsColorMatch(float4 color1, float4 color2)
     return step((delta.r + delta.g + delta.b + delta.a), epsilon);
 }
 
-float AdjustAlphaUsingTextureArray(XSLighting i, float alphaToAdj)
+float AdjustAlphaUsingTextureArray(FragmentData i, float alphaToAdj)
 {
     half4 compValRGBW = 0; // Red Green Blue White
     half4 compValCYMB = 0; // Cyan Yellow Magenta Black
@@ -317,7 +317,7 @@ float AdjustAlphaUsingTextureArray(XSLighting i, float alphaToAdj)
     return alphaToAdj;
 }
 
-void calcDissolve(inout XSLighting i, inout float3 col)
+void calcDissolve(inout FragmentData i, inout float3 col)
 {
     #ifdef _ALPHATEST_ON
         float4 mask;
@@ -376,7 +376,7 @@ void calcDissolve(inout XSLighting i, inout float3 col)
 }
 
 //todo: What the fuck is going on here?
-void calcAlpha(inout XSLighting i, inout float alpha)
+void calcAlpha(inout FragmentData i, inout float alpha)
 {
     #if defined(_ALPHABLEND_ON) && !defined(_ALPHATEST_ON) // Traditional Alphablended / Fade blending
         alpha = i.albedo.a;
@@ -435,7 +435,7 @@ half2 rotateUV(half2 uv, half rotation)
     );
 }
 
-half DotHalftone(XSLighting i, half scalar) //Scalar can be anything from attenuation to a dot product
+half DotHalftone(FragmentData i, half scalar) //Scalar can be anything from attenuation to a dot product
 {
 	bool inMirror = IsInMirror();
 	half2 uv = SphereUV(calcViewDir(i.worldPos));
@@ -448,7 +448,7 @@ half DotHalftone(XSLighting i, half scalar) //Scalar can be anything from attenu
 	return lerp(1, 1-dotMask, smoothstep(0, 0.4, 1/distance(i.worldPos, _WorldSpaceCameraPos)));;
 }
 
-half LineHalftone(XSLighting i, half scalar)
+half LineHalftone(FragmentData i, half scalar)
 {
 	// #if defined(DIRECTIONAL)
 	// 	scalar = saturate(scalar + ((1-i.attenuation) * 0.2));
