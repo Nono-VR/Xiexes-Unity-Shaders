@@ -661,7 +661,7 @@ namespace XSToon3
                 }
                 else
                 {
-                    materialEditor.TexturePropertySingleLine(new GUIContent("Emission Map (VRC Audio Link Packed)", "Emissive map. Each channel controls different audio link reactions. RGB = Lows, Mids, Highs"), _EmissionMap);
+                    materialEditor.TexturePropertySingleLine(new GUIContent("Emission Map (VRC Audio Link Packed)", "Emissive map. Each channel controls different audio link reactions. RGB = Lows, Mids, Highs, Alpha Channel can be used to have extra masking as a way to combat aliasing"), _EmissionMap);
                     materialEditor.TextureScaleOffsetProperty(_EmissionMap);
                     materialEditor.TexturePropertySingleLine(new GUIContent("Emission Map 2", "Emissive map 2."), _EmissionMap2, _EmissionColor2);
                     materialEditor.TextureScaleOffsetProperty(_EmissionMap2);

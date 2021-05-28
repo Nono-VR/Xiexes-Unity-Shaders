@@ -473,4 +473,6 @@ half LineHalftone(FragmentData i, half scalar)
 
 	return saturate(lineMask);
 }
+
+float flength(float i) { return length(float2(ddx(i), ddy(i))); }
 //
