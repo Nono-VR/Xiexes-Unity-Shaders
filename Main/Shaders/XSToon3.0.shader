@@ -1,4 +1,4 @@
-﻿Shader "Xiexe/Toon2.0/XSToon2.0"
+﻿Shader "Xiexe/Toon3/XSToon3"
 {
     Properties
     {
@@ -137,6 +137,9 @@
         [Enum(UV1,0,UV2,1)] _UVSetDissolve("Dissolve Map UVs", Int) = 0
 
         [Enum(None,0,Bass,1,Low Mids,2,High Mids,3,Treble,4,Packed Map,5)]_EmissionAudioLinkChannel("Emisssion Audio Link Channel", int) = 0
+        [ToggleUI]_ALGradientOnRed("Gradient Red", Int) = 0
+        [ToggleUI]_ALGradientOnGreen("Gradient Green", Int) = 0
+        [ToggleUI]_ALGradientOnBlue("Gradient Blue", Int) = 0
         [HDR]_EmissionColor("Emission Color", Color) = (0,0,0,0)
         [HDR]_EmissionColor0("Emission Packed Color 1", Color) = (0,0,0,0)
         [HDR]_EmissionColor1("Emission Packed Color 2", Color) = (0,0,0,0)
@@ -306,5 +309,5 @@
         }
     }
     Fallback "Diffuse"
-    CustomEditor "XSToon.XSToonInspector"
+    CustomEditor "XSToon3.XSToonInspector"
 }

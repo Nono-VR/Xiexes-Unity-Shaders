@@ -6,7 +6,7 @@ using System.Linq;
 using System;
 using System.Reflection;
 
-namespace XSToon
+namespace XSToon3
 {
     public class FoldoutToggles
     {
@@ -154,6 +154,9 @@ namespace XSToon
         private MaterialProperty _WireWidth = null;
 
         private MaterialProperty _EmissionAudioLinkChannel = null;
+        private MaterialProperty _ALGradientOnRed = null;
+        private MaterialProperty _ALGradientOnGreen = null;
+        private MaterialProperty _ALGradientOnBlue = null;
 
         //Experimenting
         private MaterialProperty _DissolveBlendPower = null;
@@ -292,20 +295,19 @@ namespace XSToon
             }
 
             DrawMainSettings(materialEditor, material);
+            DrawFurSettings(materialEditor, material);
             DrawDissolveSettings(materialEditor, material);
             DrawShadowSettings(materialEditor, material);
             DrawOutlineSettings(materialEditor, material);
             DrawNormalSettings(materialEditor, material);
             DrawSpecularSettings(materialEditor, material);
             DrawReflectionsSettings(materialEditor, material);
-            // DrawAudioLinkSettings(materialEditor, material);
             DrawEmissionSettings(materialEditor, material);
             DrawRimlightSettings(materialEditor, material);
             DrawHalfToneSettings(materialEditor, material);
             DrawTransmissionSettings(materialEditor, material);
             DrawAdvancedSettings(materialEditor, material);
             DrawPatreonSettings(materialEditor, material);
-            DrawFurSettings(materialEditor, material);
 
             //!RDPSFunctionCallInject
 
@@ -659,16 +661,23 @@ namespace XSToon
                 }
                 else
                 {
-                    materialEditor.ColorProperty(_EmissionColor, "Red Ch. Color (Bass)");
-                    materialEditor.ColorProperty(_EmissionColor0, "Green Ch. Color (Mids)");
-                    materialEditor.ColorProperty(_EmissionColor1, "Blue Ch. Color (Highs)");
-
-                    materialEditor.TexturePropertySingleLine(new GUIContent("Emission Map", "Emissive map. White to black, unless you want multiple colors. Setting to Packed Map for Audio Link will change the color per channel."), _EmissionMap);
+                    materialEditor.TexturePropertySingleLine(new GUIContent("Emission Map (VRC Audio Link Packed)", "Emissive map. Each channel controls different audio link reactions. RGB = Lows, Mids, Highs"), _EmissionMap);
                     materialEditor.TextureScaleOffsetProperty(_EmissionMap);
                     materialEditor.TexturePropertySingleLine(new GUIContent("Emission Map 2", "Emissive map 2."), _EmissionMap2, _EmissionColor2);
                     materialEditor.TextureScaleOffsetProperty(_EmissionMap2);
                     materialEditor.ShaderProperty(_UVSetEmission, new GUIContent("UV Set", "The UV set to use for the Emission Map"), 2);
                     materialEditor.ShaderProperty(_EmissionToDiffuse, new GUIContent("Tint To Diffuse", "Tints the emission to the Diffuse Color"), 2);
+
+                    XSStyles.SeparatorThin();
+
+                    materialEditor.ColorProperty(_EmissionColor, "Red Ch. Color (Lows)");
+                    materialEditor.ShaderProperty(_ALGradientOnRed, new GUIContent("Gradient Bar", "Uses a gradient on this channel to create an animated bar from the audio link data."), 1);
+
+                    materialEditor.ColorProperty(_EmissionColor0, "Green Ch. Color (Mids)");
+                    materialEditor.ShaderProperty(_ALGradientOnGreen, new GUIContent("Gradient Bar", "Uses a gradient on this channel to create an animated bar from the audio link data."), 1);
+
+                    materialEditor.ColorProperty(_EmissionColor1, "Blue Ch. Color (Highs)");
+                    materialEditor.ShaderProperty(_ALGradientOnBlue, new GUIContent("Gradient Bar", "Uses a gradient on this channel to create an animated bar from the audio link data."), 1);
                     materialEditor.ShaderProperty(_AudioLink1Remap, new GUIContent("Remap Values", "Set the new min and new max of remap."), 2);
                     materialEditor.ShaderProperty(_AudioLink2Remap, new GUIContent("Remap Values", "Set the new min and new max of remap."), 2);
                     materialEditor.ShaderProperty(_AudioLink3Remap, new GUIContent("Remap Values", "Set the new min and new max of remap."), 2);

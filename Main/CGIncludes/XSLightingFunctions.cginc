@@ -377,7 +377,7 @@ half4 calcSubsurfaceScattering(FragmentData i, DotProducts d, half3 lightDir, ha
     }
 }
 
-half4 calcEmission(FragmentData i, DotProducts d, half lightAvg)
+half4 calcEmission(FragmentData i, TextureUV t, DotProducts d, half lightAvg)
 {
     #if defined(UNITY_PASS_FORWARDBASE) // Emission only in Base Pass, and vertex lights
         float4 emission = 0;
@@ -415,6 +415,17 @@ half4 calcEmission(FragmentData i, DotProducts d, half lightAvg)
                 }
                 else
                 {
+                    float audioDataBass = AudioLinkData(ALPASS_AUDIOBASS).x;
+                    float audioDataMids = AudioLinkData(ALPASS_AUDIOLOWMIDS).x;
+                    float audioDataHighs = (AudioLinkData(ALPASS_AUDIOHIGHMIDS).x + AudioLinkData(ALPASS_AUDIOTREBLE).x) * 0.5;
+
+                    float smoothsLows = smoothstep((1-audioDataBass), (1-audioDataBass) + 0.01, i.emissionMap.r);
+                    float smoothsMids = smoothstep((1-audioDataMids), (1-audioDataMids) + 0.01, i.emissionMap.g);
+                    float smoothsHighs = smoothstep((1-audioDataHighs), (1-audioDataHighs) + 0.01, i.emissionMap.b);
+                    float4 emissionChannelRed = lerp(i.emissionMap.r, smoothsLows, _ALGradientOnRed) * _EmissionColor * audioDataBass;
+                    float4 emissionChannelGreen = lerp(i.emissionMap.g, smoothsMids, _ALGradientOnGreen) * _EmissionColor0 * audioDataMids;
+                    float4 emissionChannelBlue = lerp(i.emissionMap.b, smoothsHighs, _ALGradientOnBlue) * _EmissionColor1 * audioDataHighs;
+                    emission = (emissionChannelRed + emissionChannelGreen + emissionChannelBlue) * lerp(1, i.diffuseColor.rgbb, _EmissionToDiffuse);
                     if (_EmissionAudioLinkChannel != 5)
                     {
                         int2 aluv = int2(0, (_EmissionAudioLinkChannel - 1));
