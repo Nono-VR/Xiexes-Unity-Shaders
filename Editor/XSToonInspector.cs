@@ -157,6 +157,7 @@ namespace XSToon3
         private MaterialProperty _ALGradientOnRed = null;
         private MaterialProperty _ALGradientOnGreen = null;
         private MaterialProperty _ALGradientOnBlue = null;
+        private MaterialProperty _ALUVWidth = null;
 
         //Experimenting
         private MaterialProperty _DissolveBlendPower = null;
@@ -648,6 +649,7 @@ namespace XSToon3
             {
                 bool isAudioLink = material.GetInt("_EmissionAudioLinkChannel") > 0;
                 bool isPackedMapLink = material.GetInt("_EmissionAudioLinkChannel") == 5;
+                bool isUVBased = material.GetInt("_EmissionAudioLinkChannel") == 6;
                 materialEditor.ShaderProperty(_EmissionAudioLinkChannel, new GUIContent("Emission Audio Link", "Use Audio Link for Emission Brightness"));
 
                 if (!isPackedMapLink)
@@ -658,6 +660,9 @@ namespace XSToon3
                     materialEditor.TextureScaleOffsetProperty(_EmissionMap2);
                     materialEditor.ShaderProperty(_UVSetEmission, new GUIContent("UV Set", "The UV set to use for the Emission Map"), 2);
                     materialEditor.ShaderProperty(_EmissionToDiffuse, new GUIContent("Tint To Diffuse", "Tints the emission to the Diffuse Color"), 2);
+                    if (isUVBased) {
+                        materialEditor.ShaderProperty(_ALUVWidth, new GUIContent("History Sample Amount", "Controls the amount of Audio Link history to sample."));
+                    }
                 }
                 else
                 {
