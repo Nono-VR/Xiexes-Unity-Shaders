@@ -111,9 +111,6 @@
         _DissolveLayer2Speed("Layer2 Speed", Float) = 0
         _DissolveLayer3Speed("Layer3 Speed", Float) = 0
         _DissolveRemap("Remap Values", Vector) = (0,1,0,0)
-        _AudioLink1Remap("Remap Values", Vector) = (0, 1, 0, 0)
-        _AudioLink2Remap("Remap Values", Vector) = (0, 1, 0, 0)
-        _AudioLink3Remap("Remap Values", Vector) = (0, 1, 0, 0)
 
         _DissolveStrength("Dissolve Sharpness", Float) = 1
         [HDR]_DissolveColor("Dissolve Color", Color) = (1,1,1,1)

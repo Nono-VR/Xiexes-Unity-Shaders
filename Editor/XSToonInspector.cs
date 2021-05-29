@@ -678,9 +678,6 @@ namespace XSToon3
 
                     materialEditor.ColorProperty(_EmissionColor1, "Blue Ch. Color (Highs)");
                     materialEditor.ShaderProperty(_ALGradientOnBlue, new GUIContent("Gradient Bar", "Uses a gradient on this channel to create an animated bar from the audio link data."), 1);
-                    materialEditor.ShaderProperty(_AudioLink1Remap, new GUIContent("Remap Values", "Set the new min and new max of remap."), 2);
-                    materialEditor.ShaderProperty(_AudioLink2Remap, new GUIContent("Remap Values", "Set the new min and new max of remap."), 2);
-                    materialEditor.ShaderProperty(_AudioLink3Remap, new GUIContent("Remap Values", "Set the new min and new max of remap."), 2);
                 }
 
                 XSStyles.SeparatorThin();
