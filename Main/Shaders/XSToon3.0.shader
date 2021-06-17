@@ -235,7 +235,6 @@
 
             #include "../CGIncludes/AudioLink.cginc"
             #include "../CGIncludes/XSDefines.cginc"
-            #include "../CGIncludes/XSNoiseFuntions.cginc"
             #include "../CGIncludes/XSHelperFunctions.cginc"
             #include "../CGIncludes/XSLightingFunctions.cginc"
             #include "../CGIncludes/XSLighting.cginc"
@@ -267,7 +266,6 @@
 
             #include "../CGIncludes/AudioLink.cginc"
             #include "../CGIncludes/XSDefines.cginc"
-            #include "../CGIncludes/XSNoiseFuntions.cginc"
             #include "../CGIncludes/XSHelperFunctions.cginc"
             #include "../CGIncludes/XSLightingFunctions.cginc"
             #include "../CGIncludes/XSLighting.cginc"
@@ -297,7 +295,6 @@
 
             #include "../CGIncludes/AudioLink.cginc"
             #include "../CGIncludes/XSDefines.cginc"
-            #include "../CGIncludes/XSNoiseFuntions.cginc"
             #include "../CGIncludes/XSHelperFunctions.cginc"
             #include "../CGIncludes/XSLightingFunctions.cginc"
             #include "../CGIncludes/XSLighting.cginc"

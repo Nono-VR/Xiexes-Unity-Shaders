@@ -126,9 +126,6 @@ struct FragmentData
     #if defined(Fur)
         float layer;
     #endif
-    float noise1;
-    float noise2;
-    float noise3;
 };
 
 struct TextureUV
@@ -222,7 +219,7 @@ half _RimRange, _RimThreshold, _RimIntensity, _RimSharpness, _RimAlbedoTint, _Ri
 half _ShadowRimRange, _ShadowRimThreshold, _ShadowRimSharpness, _ShadowSharpness, _ShadowRimAlbedoTint;
 half _SSDistortion, _SSPower, _SSScale;
 half _OutlineWidth;
-half _DissolveBlendPower, _DissolveLayer1Scale, _DissolveLayer2Scale, _DissolveLayer3Scale, _DissolveLayer1Speed, _DissolveLayer2Speed, _DissolveLayer3Speed;
+half _DissolveBlendPower, _DissolveLayer1Scale, _DissolveLayer2Scale, _DissolveLayer1Speed, _DissolveLayer2Speed;
 
 half4 _ClipSlider00,_ClipSlider01,_ClipSlider02,_ClipSlider03,
       _ClipSlider04,_ClipSlider05,_ClipSlider06,_ClipSlider07,

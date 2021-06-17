@@ -144,8 +144,6 @@ namespace XSToon3
         private MaterialProperty _NormalMapMode = null;
         private MaterialProperty _DissolveCoordinates = null;
         private MaterialProperty _DissolveTexture = null;
-        private MaterialProperty _UseSimplexNoise = null;
-        private MaterialProperty _SimplexScale = null;
         private MaterialProperty _DissolveStrength = null;
         private MaterialProperty _DissolveColor = null;
         private MaterialProperty _DissolveProgress = null;
@@ -167,14 +165,9 @@ namespace XSToon3
         private MaterialProperty _DissolveBlendPower = null;
         private MaterialProperty _DissolveLayer1Scale = null;
         private MaterialProperty _DissolveLayer2Scale = null;
-        private MaterialProperty _DissolveLayer3Scale = null;
         private MaterialProperty _DissolveLayer1Speed = null;
         private MaterialProperty _DissolveLayer2Speed = null;
-        private MaterialProperty _DissolveLayer3Speed = null;
         private MaterialProperty _DissolveRemap = null;
-        private MaterialProperty _AudioLink1Remap = null;
-        private MaterialProperty _AudioLink2Remap = null;
-        private MaterialProperty _AudioLink3Remap = null;
         private MaterialProperty _ClipMask = null;
         private MaterialProperty _ClipIndex = null;
         private MaterialProperty _ClipSlider00 = null;
@@ -439,11 +432,6 @@ namespace XSToon3
                 Foldouts[material].ShowDissolve = XSStyles.ShurikenFoldout("Dissolve", Foldouts[material].ShowDissolve);
                 if (Foldouts[material].ShowDissolve)
                 {
-                    materialEditor.ShaderProperty(_UseSimplexNoise, new GUIContent("Use Simplex Noise", "Replace Dissolve noise texture with vertex space 3d noise?"));
-                    if (_UseSimplexNoise.floatValue == 1)
-                    {
-                        materialEditor.ShaderProperty(_SimplexScale, new GUIContent("Noise Scale", "The X, Y, Z scale of the simplex noise."));
-                    }
                     materialEditor.ShaderProperty(_DissolveCoordinates, new GUIContent("Dissolve Coordinates", "Should Dissolve happen in world space, texture space, or vertically?"));
                     materialEditor.TexturePropertySingleLine(new GUIContent("Dissolve Texture", "Noise texture used to control up dissolve pattern"), _DissolveTexture, _DissolveColor);
                     materialEditor.TextureScaleOffsetProperty(_DissolveTexture);
@@ -454,11 +442,9 @@ namespace XSToon3
 
                     materialEditor.ShaderProperty(_DissolveLayer1Scale, new GUIContent("Layer 1 Scale", "How much tiling to apply to the layer."));
                     materialEditor.ShaderProperty(_DissolveLayer2Scale, new GUIContent("Layer 2 Scale", "How much tiling to apply to the layer."));
-                    materialEditor.ShaderProperty(_DissolveLayer3Scale, new GUIContent("Layer 3 Scale", "How much tiling to apply to the layer."));
 
                     materialEditor.ShaderProperty(_DissolveLayer1Speed, new GUIContent("Layer 1 Speed", "Scroll Speed of the layer, can be negative."));
                     materialEditor.ShaderProperty(_DissolveLayer2Speed, new GUIContent("Layer 2 Speed", "Scroll Speed of the layer, can be negative."));
-                    materialEditor.ShaderProperty(_DissolveLayer3Speed, new GUIContent("Layer 3 Speed", "Scroll Speed of the layer, can be negative."));
 
                     materialEditor.ShaderProperty(_DissolveStrength, new GUIContent("Dissolve Sharpness", "Sharpness of the dissolve texture."));
                     materialEditor.ShaderProperty(_DissolveProgress, new GUIContent("Dissolve Progress", "Progress of the dissolve effect."));

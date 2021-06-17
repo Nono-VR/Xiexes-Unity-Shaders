@@ -328,18 +328,9 @@ float AdjustAlphaUsingTextureArray(FragmentData i, float alphaToAdj)
 void calcDissolve(inout FragmentData i, inout float3 col)
 {
     #ifdef _ALPHATEST_ON
-        float4 mask;
-        if (_UseSimplexNoise)
-        {
-            float noise = (i.noise1 * i.noise2) + (i.noise2 * i.noise3);
-            mask = noise * _DissolveBlendPower;
-        }
-        else
-        {
-            mask = i.dissolveMask.x * i.dissolveMaskSecondLayer.x * _DissolveBlendPower;
-        }
-        half dissolveAmt = Remap_Float(mask, float2(0, 1), float2(_DissolveRemap.x, _DissolveRemap.y));
-        half dissolveProgress = saturate(_DissolveProgress + lerp(0, 1-AdjustAlphaUsingTextureArray(i, 1), _UseClipsForDissolve));
+        float4 mask = i.dissolveMask.x * i.dissolveMaskSecondLayer.x * _DissolveBlendPower;
+        half dissolveAmt = Remap_Float(mask, float2(0, 1), float2(0.25, 0.75));
+        half dissolveProgress = saturate(_DissolveProgress + lerp(0, 1 - AdjustAlphaUsingTextureArray(i, 1), _UseClipsForDissolve));
         half dissolve = 0;
         if (_DissolveCoordinates == 0)
         {
@@ -347,16 +338,16 @@ void calcDissolve(inout FragmentData i, inout float3 col)
             clip(dissolve);
         }
 
-        if(_DissolveCoordinates == 1)
+        if (_DissolveCoordinates == 1)
         {
-            half distToCenter = 1-length(i.objPos);
+            half distToCenter = 1 - length(i.objPos);
             dissolve = ((distToCenter + dissolveAmt) * 0.5) - dissolveProgress;
             clip(dissolve);
         }
 
-        if(_DissolveCoordinates == 2)
+        if (_DissolveCoordinates == 2)
         {
-            half distToCenter = (1-i.objPos.y) * 0.5 + 0.5;
+            half distToCenter = (1 - i.objPos.y) * 0.5 + 0.5;
             dissolve = ((distToCenter + dissolveAmt) * 0.5) - dissolveProgress;
             clip(dissolve);
         }
@@ -371,7 +362,7 @@ void calcDissolve(inout FragmentData i, inout float3 col)
 
             half dissolveEdge = smoothstep(dissolve, dissolve - (_DissolveStrength * 0.01), dissolve * dissolveAmt);
             dissCol.rgb *= saturate(sin(dissolveProgress * 4) * 3);
-            col.rgb += (1-dissolveEdge) * dissCol.rgb;
+            col.rgb += (1 - dissolveEdge) * dissCol.rgb;
         #endif
     #endif
 }

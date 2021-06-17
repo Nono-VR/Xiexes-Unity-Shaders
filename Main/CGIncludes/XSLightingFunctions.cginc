@@ -412,25 +412,26 @@ half4 calcEmission(FragmentData i, TextureUV t, DotProducts d, half lightAvg)
 {
     #if defined(UNITY_PASS_FORWARDBASE) // Emission only in Base Pass, and vertex lights
         float4 emission = 0;
-        if(_EmissionAudioLinkChannel == 0)
+        if (_EmissionAudioLinkChannel == 0)
         {
             emission = lerp(i.emissionMap, i.emissionMap * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor;
         }
         else
         {
-            if(AudioLinkIsAvailable())
+            if (AudioLinkIsAvailable())
             {
-                if(_EmissionAudioLinkChannel != 5)
+                if (_EmissionAudioLinkChannel != 5)
                 {
                     int2 aluv;
                     if (_EmissionAudioLinkChannel == 6)
                     {
                         aluv = int2(t.emissionMapUV.x * _ALUVWidth, t.emissionMapUV.y);
-                    } else
-                    {
-                        aluv = int2(0, (_EmissionAudioLinkChannel-1));
                     }
-                    float alink = lerp(1, AudioLinkData(aluv).x , saturate(_EmissionAudioLinkChannel));
+                    else
+                    {
+                        aluv = int2(0, (_EmissionAudioLinkChannel - 1));
+                    }
+                    float alink = lerp(1, AudioLinkData(aluv).x, saturate(_EmissionAudioLinkChannel));
                     emission = lerp(i.emissionMap, i.emissionMap * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor * alink;
                     emission += lerp(i.emissionMap2, i.emissionMap2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor2;
                 }
@@ -440,9 +441,9 @@ half4 calcEmission(FragmentData i, TextureUV t, DotProducts d, half lightAvg)
                     float audioDataMids = AudioLinkData(ALPASS_AUDIOLOWMIDS).x;
                     float audioDataHighs = (AudioLinkData(ALPASS_AUDIOHIGHMIDS).x + AudioLinkData(ALPASS_AUDIOTREBLE).x) * 0.5;
 
-                    float tLow = smoothstep((1-audioDataBass), (1-audioDataBass) + 0.01, i.emissionMap.r) * i.emissionMap.a;
-                    float tMid = smoothstep((1-audioDataMids), (1-audioDataMids) + 0.01, i.emissionMap.g) * i.emissionMap.a;
-                    float tHigh = smoothstep((1-audioDataHighs), (1-audioDataHighs) + 0.01, i.emissionMap.b) * i.emissionMap.a;
+                    float tLow = smoothstep((1 - audioDataBass), (1 - audioDataBass) + 0.01, i.emissionMap.r) * i.emissionMap.a;
+                    float tMid = smoothstep((1 - audioDataMids), (1 - audioDataMids) + 0.01, i.emissionMap.g) * i.emissionMap.a;
+                    float tHigh = smoothstep((1 - audioDataHighs), (1 - audioDataHighs) + 0.01, i.emissionMap.b) * i.emissionMap.a;
 
                     float4 emissionChannelRed = lerp(i.emissionMap.r, tLow, _ALGradientOnRed) * _EmissionColor * audioDataBass;
                     float4 emissionChannelGreen = lerp(i.emissionMap.g, tMid, _ALGradientOnGreen) * _EmissionColor0 * audioDataMids;
@@ -453,7 +454,7 @@ half4 calcEmission(FragmentData i, TextureUV t, DotProducts d, half lightAvg)
             }
         }
 
-        float4 scaledEmission = emission * saturate(smoothstep(1-_ScaleWithLightSensitivity, 1+_ScaleWithLightSensitivity, 1-lightAvg));
+        float4 scaledEmission = emission * saturate(smoothstep(1 - _ScaleWithLightSensitivity, 1 + _ScaleWithLightSensitivity, 1 - lightAvg));
         float4 em = lerp(scaledEmission, emission, _ScaleWithLight);
 
         em.rgb = rgb2hsv(em.rgb);
