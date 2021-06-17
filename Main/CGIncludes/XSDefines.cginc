@@ -230,7 +230,6 @@ half4 _ClipSlider00,_ClipSlider01,_ClipSlider02,_ClipSlider03,
       _ClipSlider24, _ClipSlider25, _ClipSlider26, _ClipSlider27,
       _ClipSlider28, _ClipSlider29, _ClipSlider30, _ClipSlider31;
 
-half2 _DissolveRemap;
 int _ClipIndex;
 int _HalftoneType;
 int _FadeDither;
