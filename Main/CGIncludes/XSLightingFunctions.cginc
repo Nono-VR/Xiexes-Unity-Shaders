@@ -415,6 +415,7 @@ half4 calcEmission(FragmentData i, TextureUV t, DotProducts d, half lightAvg)
         if (_EmissionAudioLinkChannel == 0)
         {
             emission = lerp(i.emissionMap, i.emissionMap * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor;
+            emission += lerp(i.emissionMap2, i.emissionMap2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor2;
         }
         else
         {
@@ -451,6 +452,10 @@ half4 calcEmission(FragmentData i, TextureUV t, DotProducts d, half lightAvg)
                     emission = (emissionChannelRed + emissionChannelGreen + emissionChannelBlue) * lerp(1, i.diffuseColor.rgbb, _EmissionToDiffuse);
                     emission += lerp(i.emissionMap2, i.emissionMap2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor2;
                 }
+            }
+            else
+            {
+                emission += lerp(i.emissionMap2, i.emissionMap2 * i.diffuseColor.xyzz, _EmissionToDiffuse) * _EmissionColor2;
             }
         }
 
