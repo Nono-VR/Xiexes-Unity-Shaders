@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace XSToon3
 {
-    public class FoldoutToggles
+    public partial class FoldoutToggles
     {
         public bool ShowMain = true;
         public bool ShowNormal = false;
@@ -29,8 +29,8 @@ namespace XSToon3
 
     public class XSToonInspector : ShaderGUI
     {
-        private static Dictionary<Material, FoldoutToggles> Foldouts = new Dictionary<Material, FoldoutToggles>();
-        BindingFlags bindingFlags = BindingFlags.Public |
+        protected static Dictionary<Material, FoldoutToggles> Foldouts = new Dictionary<Material, FoldoutToggles>();
+        protected BindingFlags bindingFlags = BindingFlags.Public |
                                     BindingFlags.NonPublic |
                                     BindingFlags.Instance |
                                     BindingFlags.Static;
@@ -203,48 +203,48 @@ namespace XSToon3
         private MaterialProperty _ClipSlider31 = null;
 
         //Material Properties for Patreon Plugins
-        private MaterialProperty _LeftRightPan = null;
-        private MaterialProperty _UpDownPan = null;
-        private MaterialProperty _Twitchyness = null;
-        private MaterialProperty _AttentionSpan = null;
-        private MaterialProperty _FollowPower = null;
-        private MaterialProperty _FollowLimit = null;
-        private MaterialProperty _LookSpeed = null;
-        private MaterialProperty _IrisSize = null;
-        private MaterialProperty _EyeOffsetLimit = null;
+        protected MaterialProperty _LeftRightPan = null;
+        protected MaterialProperty _UpDownPan = null;
+        protected MaterialProperty _Twitchyness = null;
+        protected MaterialProperty _AttentionSpan = null;
+        protected MaterialProperty _FollowPower = null;
+        protected MaterialProperty _FollowLimit = null;
+        protected MaterialProperty _LookSpeed = null;
+        protected MaterialProperty _IrisSize = null;
+        protected MaterialProperty _EyeOffsetLimit = null;
         //--
 
         //Properties for Fur plugin
-        private MaterialProperty _FurTexture = null;
-        private MaterialProperty _FurLengthMask = null;
-        private MaterialProperty _NoiseTexture = null;
-        private MaterialProperty _LayerCount = null;
-        private MaterialProperty _FurLength = null;
-        private MaterialProperty _FurWidth = null;
-        private MaterialProperty _Gravity = null;
-        private MaterialProperty _CombX = null;
-        private MaterialProperty _CombY = null;
-        private MaterialProperty _FurOcclusion = null;
-        private MaterialProperty _OcclusionFalloffMin = null;
-        private MaterialProperty _OcclusionFalloffMax = null;
-        private MaterialProperty _ColorFalloffMin = null;
-        private MaterialProperty _ColorFalloffMax = null;
-        private MaterialProperty _BottomColor = null;
-        private MaterialProperty _TopColor = null;
-        private MaterialProperty _StrandAmount = null;
+        protected MaterialProperty _FurTexture = null;
+        protected MaterialProperty _FurLengthMask = null;
+        protected MaterialProperty _NoiseTexture = null;
+        protected MaterialProperty _LayerCount = null;
+        protected MaterialProperty _FurLength = null;
+        protected MaterialProperty _FurWidth = null;
+        protected MaterialProperty _Gravity = null;
+        protected MaterialProperty _CombX = null;
+        protected MaterialProperty _CombY = null;
+        protected MaterialProperty _FurOcclusion = null;
+        protected MaterialProperty _OcclusionFalloffMin = null;
+        protected MaterialProperty _OcclusionFalloffMax = null;
+        protected MaterialProperty _ColorFalloffMin = null;
+        protected MaterialProperty _ColorFalloffMax = null;
+        protected MaterialProperty _BottomColor = null;
+        protected MaterialProperty _TopColor = null;
+        protected MaterialProperty _StrandAmount = null;
         //
 
         //!RDPSPropsInjection
 
-        private static int BlendMode;
-        private bool isPatreonShader = false;
-        private bool isEyeTracking = false;
-        private bool isFurShader = false;
-        private bool isOutlined = false;
-        private bool isCutout = false;
-        private bool isCutoutMasked = false;
-        private bool isDithered = false;
-        private bool isA2C = false;
+        protected static int BlendMode;
+        protected bool isPatreonShader = false;
+        protected bool isEyeTracking = false;
+        protected bool isFurShader = false;
+        protected bool isOutlined = false;
+        protected bool isCutout = false;
+        protected bool isCutoutMasked = false;
+        protected bool isDithered = false;
+        protected bool isA2C = false;
 
         public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] props)
         {
@@ -303,12 +303,18 @@ namespace XSToon3
             DrawRimlightSettings(materialEditor, material);
             DrawHalfToneSettings(materialEditor, material);
             DrawTransmissionSettings(materialEditor, material);
+            
+            PluginGUI(materialEditor, material);
+            
             DrawAdvancedSettings(materialEditor, material);
             DrawPatreonSettings(materialEditor, material);
 
             //!RDPSFunctionCallInject
 
             XSStyles.DoFooter();
+        }
+
+        public virtual void PluginGUI(MaterialEditor materialEditor, Material material) {
         }
 
         private void SetupFoldoutDictionary(Material material)
